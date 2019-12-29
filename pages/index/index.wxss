@@ -1,0 +1,159 @@
+page {
+  display: flex;
+  flex-direction: column;
+  background: #f7f4f4;
+  height: 100%;
+}
+
+.content  {
+  flex: 1;
+}
+
+.content > swiper {
+  height: 100%;
+}
+
+/* 首页 */
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-device {
+  /* 文字水平垂直居中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30rpx;
+
+  /* 圆角边框弧度 */
+  border-radius: 30rpx;
+
+  font-size: 40rpx;
+  background: #fff;
+  width: 700rpx;
+  height: 170rpx;
+}
+
+.device-title {
+  margin-top: 30rpx;
+  text-align: center;
+  font-size: 34rpx;
+  height: 60rpx;
+}
+
+.device-overview {
+  /* 文字水平垂直居中 */
+  display: flex;
+  align-items: center;
+  /* 圆角边框弧度 */
+  border-radius: 30rpx;
+  background: #fff;
+  width: 700rpx;
+  height: 100rpx;
+}
+
+.device-amount {
+  flex: 1;
+  margin-left: 40rpx;
+  font-size: 34rpx;
+}
+
+.device-info {
+  flex: 1;
+  border-radius: 30rpx;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  /* height: 500rpx; */
+  width: 700rpx;
+}
+
+.device-info > swiper {
+  height: 100%;
+}
+
+
+.device-list-item {
+  display: flex;
+  align-items: center;
+  margin-top: 30rpx;
+  border-radius: 30rpx;
+  background: #fff;
+  height: 170rpx;
+}
+
+.device-list-item image {
+  margin-left: 40rpx;
+}
+
+.device-list-item-info {
+  flex: 1;
+  margin-left: 20rpx;
+}
+
+.device-list-item-name {
+  font-size: 30rpx;
+}
+
+.device-list-item-rmkinfo {
+  font-size: 25rpx;
+}
+
+.device-warning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20rpx;
+}
+
+.device-warning > image {
+  width: 35rpx;
+  height: 35rpx;
+  margin: 10rpx auto 10rpx;
+}
+
+
+.device-warning-text {
+  font-size: 25rpx;
+}
+
+.device-valve-position{
+  margin-left: 20rpx;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+
+/* 底部 TabBar */
+
+.bottom-tabbar {
+  height: 150rpx;
+  display: flex;
+  align-items: center;
+  background: #fff;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.tab-item.active > view {
+  color: rgb(143, 170, 220);
+}
+
+.tab-item > view {
+  margin-top: 15rpx;
+  font-size: 25rpx;
+}
+

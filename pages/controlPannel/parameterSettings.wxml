@@ -1,0 +1,51 @@
+<!-- 参数设置 -->
+<view class="settings">
+  <view class="settings-tittle">常规设置</view>
+
+  <view class="settings-item" bindtap="showLockedrotorTimeModal">
+    <view class="settings-item-name">堵转时间</view>
+    <view style="font-size: 25rpx; margin-right: 25rpx;">10 秒</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+
+  <view class="settings-item-without-border-bottom">
+    <view class="settings-item-name">调节精度</view>
+    <view style="font-size: 25rpx; margin-right: 25rpx;">1 %</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+  
+</view> 
+
+<view class="settings">
+  <view class="settings-tittle">高级设置</view>
+
+  <view class="settings-item">
+    <view class="settings-item-name">电子刹车</view>
+    <view style="font-size: 25rpx; margin-right: 25rpx;">开启</view>
+    <switch></switch>
+  </view>
+  
+  <view class="settings-item-without-border-bottom">
+    <view class="settings-item-name">正反作用</view>
+    <view style="font-size: 25rpx; margin-right: 25rpx;">开启</view>
+    <switch></switch>
+  </view>
+
+</view> 
+
+<view class="modal-mask" bindtap="hideLockedrotorTimeModal" 
+    catchtouchmove="preventTouchMove" wx:if="{{showLockedrotorTimeDialog}}"></view>
+<view class="modal-dialog" wx:if="{{showLockedrotorTimeDialog}}">
+    <view class="modal-title">堵转时间</view>
+    <view class="modal-content">
+        <input type="number" class="modal-input" 
+        placeholder="请输入" value="{{lockedrotorTimeChange}}"
+        bindinput="inputLockedrotorTime" 
+        bindconfirm="confirmLockedrotorTime" />
+        <icon type="cancel" size='20' bindtap="clearLockedrotorTime"></icon>
+    </view>
+    <view class="modal-footer">
+        <view class="modal-cancel" bindtap="cancelLockedrotorTime">取消</view>
+        <view class="modal-confirm" bindtap="confirmLockedrotorTime">确认</view>
+    </view>
+</view>

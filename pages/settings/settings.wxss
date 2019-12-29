@@ -1,0 +1,54 @@
+page {
+  display: flex;
+  flex-direction: column;
+  background: #f7f4f4;
+  /* page 文字颜色 */
+  color: #003333;
+  height: 100%;
+}
+
+.settings {
+  background: #fff;
+  margin-top: 30rpx;
+}
+
+.settings-tittle {
+  display: flex;
+  align-items: center;
+  font-size: 25rpx;
+  color: hsl(0, 0%, 33%);
+  border-bottom: 1rpx solid #afafaf;
+  height: 50rpx;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  border-bottom: 1rpx solid #afafaf;
+}
+
+.settings-item-without-border-bottom {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+}
+
+.settings-item-name {
+  flex: 1;
+}
+
+.settings-item-name-devicename {
+  font-size: 25rpx;
+  margin-right: 25rpx;
+}
+
+button {
+  margin-top: 80rpx;
+}

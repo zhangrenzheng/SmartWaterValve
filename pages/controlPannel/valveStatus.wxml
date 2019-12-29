@@ -1,0 +1,44 @@
+<!-- 阀门状态 -->
+<view class="settings">
+  <view class="settings-tittle">阀门状态</view>
+
+    <view class="settings-item">
+      <view class="settings-item-name">阀门状态</view>
+      <!-- 全开 或 全关 -->
+      <view style="font-size: 25rpx; margin-right: 25rpx;">全开</view>
+    </view>
+
+    <view class="settings-item">
+      <view class="settings-item-name">网络链接</view>
+      <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-working.png"></image>
+    </view>
+
+    <view class="settings-item">
+      <view class="settings-item-name">警告</view>
+      <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
+    </view>
+
+    <view class="settings-item">
+      <view class="settings-item-name">正在打开</view>
+      <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
+    </view>
+
+    <view class="settings-item-without-border-bottom">
+      <view class="settings-item-name">正在关闭</view>
+      <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
+    </view>
+  
+</view> 
+
+<view class="settings">
+  <view class="settings-tittle">故障信息</view>
+  <view class="settings-item">
+    <view class="settings-item-name">电机缺项</view>
+    <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
+  </view>
+  
+  <view class="settings-item-without-border-bottom">
+    <view class="settings-item-name">过热保护</view>
+  </view>
+
+</view> 

@@ -1,0 +1,88 @@
+<view class="content">
+  <swiper current="{{item}}" bindchange="changeTab">
+
+    <swiper-item catchtouchmove='catchTouchMove'>
+      <view class="container">
+
+        <view class="add-device" bindtap="addDevice"> 
+          <text>添加设备</text>
+        </view>
+
+        <view class="device-title">
+          <text>设备</text>
+        </view>
+
+        <view class="device-overview" bindtap="displayAllDevice">
+          <view class="device-amount"> 我的设备 ({{deviceList.length}})</view>
+          <image wx:if="{{displayAllDevice == false}}" style="width: 40rpx; height: 40rpx; margin-right: 40rpx;" src="../../icon/icon-downarrow.png"></image>
+          <image wx:else style="width: 40rpx; height: 40rpx; margin-right: 40rpx;" src="../../icon/icon-uparrow.png"></image>
+        </view>
+
+        <view class="device-info" wx:if="{{displayAllDevice == true}}">
+          <swiper>
+            <swiper-item catchtouchmove='catchTouchMove'>
+                <scroll-view style="height: 100%;" scroll-y>
+                  <view class="device-list-item" wx:for="{{deviceList}}" wx:key="deviceId"  id="{{index}}" bindtap="jumpToControlPanel">
+                    <image style="width: 50rpx; height: 100rpx" src="smartvalue.png"></image>
+
+                    <view class="device-list-item-info">
+                      <view class="device-list-item-name">{{item.deviceName}}</view>
+                      <view class="device-list-item-rmkinfo">{{item.deviceRemarkInformation}}</view>
+                    </view>
+
+                    <view class="device-warning">
+                      <image src="../../icon/icon-warning.png"></image>
+                      <view class="device-warning-text">警告</view>
+                    </view>
+
+                    <view class="device-warning">
+                      <image src="../../icon/icon-warning.png"></image>
+                      <view class="device-warning-text">运行</view>
+                    </view>
+
+                    <view class="device-warning">
+                      <image src="../../icon/icon-warning.png"></image>
+                      <view class="device-warning-text">链接</view>
+                    </view>
+
+                    <view class="device-valve-position">{{item.deviceValvePosition}}%</view>
+
+                    <image style="width: 50rpx; height: 50rpx; margin-left: 20rpx; margin-right: 40rpx;" 
+                      src="../../icon/icon-more.png" id="{{index}}" catchtap="jumpToSettings"> 
+                    </image>
+                  </view>
+                </scroll-view>
+            </swiper-item>
+          </swiper>
+        </view>
+
+        <view class="device-info" wx:else>
+        </view>
+
+      </view>
+    </swiper-item>
+
+    <swiper-item>
+      <include src="myinfo.wxml" />
+    </swiper-item>
+
+  </swiper>
+</view>
+
+
+<!-- 底部 -->
+<view class="bottom-tabbar">
+
+  <view class="tab-item {{tab==0 ? 'active':''}}" bindtap="changeItem" data-item="0">
+    <image style="height: 60rpx; width: 60rpx;" src="../../icon/icon-home.png"
+      bindtap="changeItem" data-item="0"></image>
+    <view class="tab-item-name" bindtap="changeItem" data-item="0">首页</view>
+  </view>
+
+  <view class="tab-item {{tab==1 ? 'active':''}}" bindtap="changeItem" data-item="1">
+    <image style="height: 60rpx; width: 60rpx;" src="../../icon/icon-myinfo.png"
+      bindtap="changeItem" data-item="1"></image>
+    <view class="tab-item-name" bindtap="changeItem" data-item="0">我的</view>
+  </view>
+
+</view>

@@ -1,0 +1,41 @@
+<!--pages/settings/settings.wxml-->
+
+<view class="settings">
+  <view class="settings-tittle">功能设置</view>
+  <view class="settings-item-without-border-bottom">
+    <view class="settings-item-name">设备控制</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+  
+</view> 
+
+<view class="settings">
+  <view class="settings-tittle">通用设置</view>
+  <view class="settings-item">
+    <view class="settings-item-name">设备名称</view>
+    <view class="settings-item-name-devicename">{{deviceName}}</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+  
+  <view class="settings-item">
+    <view class="settings-item-name">系统日志</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+
+  <view class="settings-item">
+    <view class="settings-item-name">设备共享</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+
+  <view class="settings-item">
+    <view class="settings-item-name">启用访问权限</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+
+  <view class="settings-item-without-border-bottom">
+    <view class="settings-item-name">用户权限管理</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+</view> 
+
+<button size="default" type="warn">删除设备</button>
