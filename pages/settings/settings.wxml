@@ -11,9 +11,9 @@
 
 <view class="settings">
   <view class="settings-tittle">通用设置</view>
-  <view class="settings-item">
+  <view class="settings-item" bindtap="showModifyDeviceNameDialog">
     <view class="settings-item-name">设备名称</view>
-    <view class="settings-item-name-devicename">{{deviceName}}</view>
+    <view class="settings-item-name-devicename">{{show_name}}</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
   
@@ -38,4 +38,41 @@
   </view>
 </view> 
 
-<button size="default" type="warn">删除设备</button>
+<button size="default" type="warn" bindtap="showDeleteDeviceDialog">删除设备</button>
+
+<!-- 修改设备名称弹窗 -->
+<view class="modal-mask" bindtap="hideModifyDeviceNameDialog"
+    catchtouchmove="preventTouchMove" wx:if="{{modifyDeviceNameDialogVisible}}">
+</view>
+<view class="modal-dialog" wx:if="{{modifyDeviceNameDialogVisible}}">
+    <view class="modal-title">修改设备名称</view>
+    <view class="modal-content" style="margin-bottom: 10rpx;">
+        <input type="text" class="modal-input" 
+          placeholder="请输入" value="{{showNameToDisplay}}"
+          bindinput="inputShowName" 
+          bindconfirm="confirmModifyDeviceName" />
+        <icon type="cancel" size='20' bindtap="clearShowName"></icon>
+    </view>
+    <view class="modal-content">
+        <input type="text" class="modal-input" 
+          placeholder="请输入" value="{{remarkToDisplay}}"
+          bindinput="inputRemark" 
+          bindconfirm="confirmModifyDeviceName" />
+        <icon type="cancel" size='20' bindtap="clearRemark"></icon>
+    </view>
+    <view class="modal-footer">
+        <view class="modal-cancel" bindtap="hideModifyDeviceNameDialog">取消</view>
+        <view class="modal-confirm" bindtap="confirmModifyDeviceName">确认</view>
+    </view>
+</view>
+
+<!-- 删除设备弹窗 -->
+<view class="modal-mask" bindtap="hideDeleteDeviceDialog" 
+    catchtouchmove="preventTouchMove" wx:if="{{deleteDeviceDialogVisible}}"></view>
+<view class="modal-dialog" wx:if="{{deleteDeviceDialogVisible}}">
+    <view class="modal-title">是否要删除该设备？</view>
+    <view class="modal-footer">
+        <view class="modal-cancel" bindtap="hideDeleteDeviceDialog">取消</view>
+        <view class="modal-confirm" bindtap="deleteDevice">确认</view>
+    </view>
+</view>

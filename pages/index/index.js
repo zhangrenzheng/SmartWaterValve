@@ -1,4 +1,5 @@
-// pages/test/test.js
+const app = getApp();
+
 Page({
 
   /**
@@ -8,43 +9,8 @@ Page({
     item: 0,
     tab: 0,
     displayAllDevice: false,
-    deviceList: [
-      {
-        deviceName: "二楼水阀 #1",
-        deviceId: 0,
-        deviceRemarkInformation: "备注信息",
-        deviceStatus: "",
-        deviceValvePosition: "56"
-      },
-      {
-        deviceName: "二楼水阀 #2",
-        deviceId: 1,
-        deviceRemarkInformation: "备注信息",
-        deviceStatus: "",
-        deviceValvePosition: "60"
-      },
-      {
-        deviceName: "二楼水阀 #3",
-        deviceId: 2,
-        deviceRemarkInformation: "备注信息",
-        deviceStatus: "",
-        deviceValvePosition: "60"
-      },
-      {
-        deviceName: "二楼水阀 #4",
-        deviceId: 3,
-        deviceRemarkInformation: "备注信息",
-        deviceStatus: "",
-        deviceValvePosition: "60"
-      },
-      {
-        deviceName: "二楼水阀 #5",
-        deviceId: 4,
-        deviceRemarkInformation: "备注信息",
-        deviceStatus: "",
-        deviceValvePosition: "60"
-      }
-    ]
+    openID: app.globalData.openID,
+    deviceList: []
   },
 
   /**
@@ -65,7 +31,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this;
+    var openID = this.data.openID;
 
+    /* 获取设备列表 */
+    wx.request({
+      url: 'https://swv.wuwz.net/UserDevices?openID=' + encodeURIComponent(openID),
+      success: function (res) {
+        that.setData({
+          deviceList: res.data
+        })
+      }
+    });
   },
 
   /**
@@ -117,14 +94,13 @@ Page({
 
   /* 跳转至 设置 页面 */
   jumpToSettings: function (e) {
-    var deviceId = this.data.deviceList[e.target.id].deviceId;
-    var deviceName = this.data.deviceList[e.target.id].deviceName;
-    var deviceRemarkInformation = this.data.deviceList[e.target.id].deviceRemarkInformation;
-
+    var device_id = this.data.deviceList[e.target.id].device_id;
+    var show_name = this.data.deviceList[e.target.id].show_name;
+    var remark = this.data.deviceList[e.target.id].remark;
+    
     wx.navigateTo({
-      url: "/pages/settings/settings?deviceId=" + encodeURIComponent(deviceId) +
-        "&deviceName=" + encodeURIComponent(deviceName) + "&deviceRemarkInformation" +
-        encodeURIComponent(deviceRemarkInformation),
+      url: "/pages/settings/settings?device_id=" + encodeURIComponent(device_id) +
+        "&show_name=" + encodeURIComponent(show_name) + "&remark=" + encodeURIComponent(remark),
     })
   },
 

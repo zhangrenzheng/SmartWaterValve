@@ -87,16 +87,19 @@ Page({
       simulationValueChange: this.data.simulationValue
     })
   },
+  
   hideSimulationModal: function () {
     this.setData({
       showSimulationDialog: false
     })
   },
+
   inputSimulationValue: function(e){
     this.setData({ 
       simulationValueChange: e.detail.value 
     })
   },
+
   confirmSimulationValue: function(){
     if (!this.data.simulationValueChange) return
     this.setData({
@@ -105,9 +108,11 @@ Page({
     })
     this.hideSimulationModal();
   },
+
   cancelSimulationValue: function(){
     this.hideSimulationModal();
   },
+
   clearSimulationValue: function(){
     this.setData({ simulationValueChange: '0' })
   },
@@ -118,16 +123,19 @@ Page({
       lockedrotorTimeChange: this.data.lockedrotorTime
     })
   },
+
   hideLockedrotorTimeModal: function(){
     this.setData({
       showLockedrotorTimeDialog: false
     })
   },
+
   inputLockedrotorTime: function(e){
     this.setData({
       lockedrotorTimeChange: e.detail.value
     })
   },
+
   confirmLockedrotorTime: function(){
     if (!this.data.lockedrotorTimeChange) return
     this.setData({
@@ -136,12 +144,15 @@ Page({
     })
     this.hideLockedrotorTimeModal()
   },
+
   cancelLockedrotorTime: function () {
     this.hideLockedrotorTimeModal();
   },
+
   clearLockedrotorTime: function () {
     this.setData({ lockedrotorTimeChange: this.data.lockedrotorTime })
   },
+
   preventTouchMove: function() {},
 
   /**
