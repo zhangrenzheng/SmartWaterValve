@@ -106,8 +106,12 @@ Page({
 
   /* 跳转至 控制面板 页面 */
   jumpToControlPanel: function (e) {
+    var device_id = this.data.deviceList[e.target.id].device_id;
+    var show_name = this.data.deviceList[e.target.id].show_name;
+
     wx.navigateTo({
-      url: "/pages/controlPannel/controlPannel",
+      url: "/pages/controlPannel/controlPannel?device_id=" + encodeURIComponent(device_id) +
+        "&show_name=" + encodeURIComponent(show_name),
     })
   },
 

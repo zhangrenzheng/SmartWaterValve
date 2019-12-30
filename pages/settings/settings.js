@@ -18,7 +18,7 @@ Page({
     modifyDeviceNameDialogVisible: false,
     deleteDeviceDialogVisible: false,
 
-    
+    result: null
   },
 
   /**
@@ -81,7 +81,9 @@ Page({
 
   },
 
-
+  checkResult: function () {
+    console.log("操作成功")
+  },
 
 
 
@@ -125,6 +127,7 @@ Page({
   },
 
   requestModifyDeviceName: function () {
+    var that = this;
     var show_name = this.data.show_name;
     var remark = this.data.remark;
     var device_id = this.data.device_id;
@@ -135,6 +138,19 @@ Page({
         '&show_name=' + encodeURIComponent(show_name)
         + '&device_id=' + encodeURIComponent(device_id)
         + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+          that.checkResult()
+        if (that.data.result == 2)
+          console.log("无权限")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
     })
   },
 

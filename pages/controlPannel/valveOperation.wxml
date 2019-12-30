@@ -2,18 +2,20 @@
 
 <view class="settings">
   <view class="settings-item">
-    <view class="settings-item-name">阀门全开</view>
-    <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-poweron.png"></image>
+    <view class="settings-item-name">阀门开度</view>
+    <view style="font-size: 25rpx;">{{deviceInfo.position}} %</view>
   </view>
   
   <view class="settings-item">
-    <view class="settings-item-name">阀门全关</view>
-    <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-poweroff.png"></image>
+    <view class="settings-item-name">远控位置</view>
+    <image wx:if="{{deviceInfo.state == 0}}" style="width: 40rpx; height: 40rpx;" src="../../icon/icon-working.png"></image>
+    <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
   </view>
   
   <view class="settings-item">
-    <view class="settings-item-name">警告</view>
-    <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
+    <view class="settings-item-name">故障报警</view>
+    <image wx:if="{{deviceInfo.error == 0}}" style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
+    <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
   </view>
 
   <view class="settings-item" bindtap="showControlModal">
@@ -24,20 +26,32 @@
     <image style="width: 20rpx; height: 40rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
-  <view class="settings-item">
+  <!-- <view class="settings-item">
     <view class="settings-item-name">网络连接</view>
     <view style="font-size: 25rpx; margin-right: 25rpx;">良好</view>
     <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-working.png"></image>
-  </view>
+  </view> -->
 
-  <view class="settings-item" bindtap="showSimulationModal">
+  <view class="settings-item" bindtap="showModifyPositionDialog">
     <view class="settings-item-name">阀门模拟量控制</view>
     <image style="width: 20rpx; height: 40rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
-  <view class="settings-item-without-border-bottom">
+  <!-- <view class="settings-item-without-border-bottom">
     <view class="settings-item-name">当前阀门位置</view>
     <view style="font-size: 25rpx;">{{simulationValue}} %</view>
+  </view> -->
+
+  <view class="settings-item">
+    <view class="settings-item-name">打开</view>
+    <image wx:if="{{deviceInfo.error == 0}}" style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
+    <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
+  </view>
+
+  <view class="settings-item-without-border-bottom">
+    <view class="settings-item-name">关闭</view>
+    <image wx:if="{{deviceInfo.error == 0}}" style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
+    <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
   </view>
 </view> 
 
@@ -68,20 +82,20 @@
 </view>
 
 <!-- 模拟量控制弹窗 -->
-<view class="modal-mask" bindtap="hideSimulationModal"
-    catchtouchmove="preventTouchMove" wx:if="{{showSimulationDialog}}">
+<view class="modal-mask" bindtap="hideModifyPositionDialog"
+    catchtouchmove="preventTouchMove" wx:if="{{modifyPositionDialogVisible}}">
 </view>
-<view class="modal-dialog" wx:if="{{showSimulationDialog}}">
+<view class="modal-dialog" wx:if="{{modifyPositionDialogVisible}}">
     <view class="modal-title">阀门模拟量控制</view>
     <view class="modal-content">
         <input type="number" class="modal-input" 
-        placeholder="请输入" value="{{simulationValueChange}}"
-        bindinput="inputSimulationValue" 
-        bindconfirm="confirmSimulationValue" />
-        <icon type="cancel" size='20' bindtap="clearSimulationValue"></icon>
+        placeholder="请输入" value="{{positionToDisplay}}"
+        bindinput="inputPosition" 
+        bindconfirm="confirmModifyPosition" />
+        <icon type="cancel" size='20' bindtap="clearPosition"></icon>
     </view>
     <view class="modal-footer">
-        <view class="modal-cancel" bindtap="cancelSimulationValue">取消</view>
-        <view class="modal-confirm" bindtap="confirmSimulationValue">确认</view>
+        <view class="modal-cancel" bindtap="hideModifyPositionDialog">取消</view>
+        <view class="modal-confirm" bindtap="confirmModifyPosition">确认</view>
     </view>
 </view>
