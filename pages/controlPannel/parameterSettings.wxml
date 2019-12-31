@@ -2,50 +2,57 @@
 <view class="settings">
   <view class="settings-tittle">常规设置</view>
 
-  <view class="settings-item" bindtap="showLockedrotorTimeModal">
-    <view class="settings-item-name">堵转时间</view>
-    <view style="font-size: 25rpx; margin-right: 25rpx;">10 秒</view>
+  <view class="settings-item" bindtap="showControlTypeDialog">
+    <view class="settings-item-name">控制方式</view>
+    <view wx:if="{{controlType == 1}}" style="font-size: 25rpx; margin-right: 25rpx;">高字节</view>
+    <view wx:if="{{controlType == 2}}" style="font-size: 25rpx; margin-right: 25rpx;">低字节</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
-  <view class="settings-item-without-border-bottom">
-    <view class="settings-item-name">调节精度</view>
-    <view style="font-size: 25rpx; margin-right: 25rpx;">1 %</view>
+  <view class="settings-item-without-border-bottom" bindtap="showModifyAccuracyDialog">
+    <view class="settings-item-name">控制精度</view>
+    <view style="font-size: 25rpx; margin-right: 25rpx;">{{accuracy}}</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
   
-</view> 
+</view>
 
-<view class="settings">
-  <view class="settings-tittle">高级设置</view>
+<!-- 控制方式弹窗 -->
+<view class="modal-mask" bindtap="hideControlTypeDialog" 
+    catchtouchmove="preventTouchMove" wx:if="{{controlTypeDialogVisible}}"></view>
+<view class="modal-dialog" wx:if="{{controlTypeDialogVisible}}">
+    <view class="modal-title">控制方式</view>
+    <view class="modal-switch">
 
-  <view class="settings-item">
-    <view class="settings-item-name">电子刹车</view>
-    <view style="font-size: 25rpx; margin-right: 25rpx;">开启</view>
-    <switch></switch>
-  </view>
-  
-  <view class="settings-item-without-border-bottom">
-    <view class="settings-item-name">正反作用</view>
-    <view style="font-size: 25rpx; margin-right: 25rpx;">开启</view>
-    <switch></switch>
-  </view>
+      <view class="modal-switch-item" bindtap="highByte">
+        <view class="modal-switch-item-name" >高字节</view>
+        <image wx:if="{{controlType == 1}}" style="width: 30rpx; height: 30rpx;" src="../../icon/icon-leftarrow.png"></image>
+      </view>
+      
+      <view class="modal-switch-item" bindtap="lowByte">
+        <view class="modal-switch-item-name" >低字节</view>
+        <image wx:if="{{controlType == 2}}" style="width: 30rpx; height: 30rpx;" src="../../icon/icon-leftarrow.png"></image>
+      </view>
 
-</view> 
+    </view>
+</view>
 
-<view class="modal-mask" bindtap="hideLockedrotorTimeModal" 
-    catchtouchmove="preventTouchMove" wx:if="{{showLockedrotorTimeDialog}}"></view>
-<view class="modal-dialog" wx:if="{{showLockedrotorTimeDialog}}">
-    <view class="modal-title">堵转时间</view>
+
+<!-- 控制精度弹窗 -->
+<view class="modal-mask" bindtap="hideModifyAccuracyDialog"
+    catchtouchmove="preventTouchMove" wx:if="{{modifyAccuracyDialogVisible}}">
+</view>
+<view class="modal-dialog" wx:if="{{modifyAccuracyDialogVisible}}">
+    <view class="modal-title">控制精度</view>
     <view class="modal-content">
         <input type="number" class="modal-input" 
-        placeholder="请输入" value="{{lockedrotorTimeChange}}"
-        bindinput="inputLockedrotorTime" 
-        bindconfirm="confirmLockedrotorTime" />
-        <icon type="cancel" size='20' bindtap="clearLockedrotorTime"></icon>
+        placeholder="请输入" value="{{accuracyToDisplay}}"
+        bindinput="inputAccuracy" 
+        bindconfirm="confirmModifyAccuracy" />
+        <icon type="cancel" size='20' bindtap="clearAccuracy"></icon>
     </view>
     <view class="modal-footer">
-        <view class="modal-cancel" bindtap="cancelLockedrotorTime">取消</view>
-        <view class="modal-confirm" bindtap="confirmLockedrotorTime">确认</view>
+        <view class="modal-cancel" bindtap="hideModifyAccuracyDialog">取消</view>
+        <view class="modal-confirm" bindtap="confirmModifyAccuracy">确认</view>
     </view>
 </view>

@@ -3,7 +3,7 @@
 <view class="settings">
   <view class="settings-item">
     <view class="settings-item-name">阀门开度</view>
-    <view style="font-size: 25rpx;">{{deviceInfo.position}} %</view>
+    <view style="font-size: 25rpx;">{{position}} %</view>
   </view>
   
   <view class="settings-item">
@@ -18,64 +18,53 @@
     <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
   </view>
 
-  <view class="settings-item" bindtap="showControlModal">
+  <view class="settings-item" bindtap="showOpenControlDialog">
     <view class="settings-item-name">阀门开关量控制</view>
-    <view wx:if="{{valveSwitch == 1}}" style="font-size: 25rpx; margin-right: 25rpx;">打开</view>
-    <view wx:if="{{valveSwitch == 0}}" style="font-size: 25rpx; margin-right: 25rpx;">关闭</view>
-    <view wx:if="{{valveSwitch == -1}}" style="font-size: 25rpx; margin-right: 25rpx;">停止</view>
+    <view wx:if="{{openControl == 2}}" style="font-size: 25rpx; margin-right: 25rpx;">打开</view>
+    <view wx:if="{{openControl == 1}}" style="font-size: 25rpx; margin-right: 25rpx;">关闭</view>
+    <view wx:if="{{openControl == 0}}" style="font-size: 25rpx; margin-right: 25rpx;">停止</view>
     <image style="width: 20rpx; height: 40rpx;" src="../../icon/icon-next.png"></image>
   </view>
-
-  <!-- <view class="settings-item">
-    <view class="settings-item-name">网络连接</view>
-    <view style="font-size: 25rpx; margin-right: 25rpx;">良好</view>
-    <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-working.png"></image>
-  </view> -->
 
   <view class="settings-item" bindtap="showModifyPositionDialog">
     <view class="settings-item-name">阀门模拟量控制</view>
     <image style="width: 20rpx; height: 40rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
-  <!-- <view class="settings-item-without-border-bottom">
-    <view class="settings-item-name">当前阀门位置</view>
-    <view style="font-size: 25rpx;">{{simulationValue}} %</view>
-  </view> -->
-
   <view class="settings-item">
     <view class="settings-item-name">打开</view>
-    <image wx:if="{{deviceInfo.error == 0}}" style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
-    <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
+    <image wx:if="{{openControl == 2}}" style="width: 40rpx; height: 40rpx;" src="../../icon/icon-working.png"></image>
+    <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
   </view>
 
   <view class="settings-item-without-border-bottom">
     <view class="settings-item-name">关闭</view>
-    <image wx:if="{{deviceInfo.error == 0}}" style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
-    <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-warning.png"></image>
+    <image wx:if="{{openControl == 1}}" style="width: 40rpx; height: 40rpx;" src="../../icon/icon-working.png"></image>
+    <image wx:else style="width: 40rpx; height: 40rpx;" src="../../icon/icon-plain.png"></image>
   </view>
 </view> 
 
 
 <!-- 开关量控制弹窗 -->
-<view class="modal-mask" bindtap="hideControlModal" 
-    catchtouchmove="preventTouchMove" wx:if="{{showControlDialog}}"></view>
-<view class="modal-dialog" wx:if="{{showControlDialog}}">
+<view class="modal-mask" bindtap="hideOpenControlDialog" 
+    catchtouchmove="preventTouchMove" wx:if="{{openControlDialogVisible}}"></view>
+<view class="modal-dialog" wx:if="{{openControlDialogVisible}}">
     <view class="modal-title">阀门开关量控制</view>
     <view class="modal-switch">
 
-      <view class="modal-switch-item" bindtap="openControl">
+      <view class="modal-switch-item" bindtap="openValve">
         <view class="modal-switch-item-name" >打开</view>
-        <image wx:if="{{valveSwitch == 1}}" style="width: 30rpx; height: 30rpx;" src="../../icon/icon-leftarrow.png"></image>
+        <image wx:if="{{openControl == 2}}" style="width: 30rpx; height: 30rpx;" src="../../icon/icon-leftarrow.png"></image>
       </view>
       
-      <view class="modal-switch-item" bindtap="closeControl">
+      <view class="modal-switch-item" bindtap="closeValve">
         <view class="modal-switch-item-name" >关闭</view>
-        <image wx:if="{{valveSwitch == 0}}" style="width: 30rpx; height: 30rpx;" src="../../icon/icon-leftarrow.png"></image>
+        <image wx:if="{{openControl == 1}}" style="width: 30rpx; height: 30rpx;" src="../../icon/icon-leftarrow.png"></image>
       </view>
 
-      <view class="modal-switch-item" bindtap="stopControl">
+      <view class="modal-switch-item" bindtap="stopValve">  
         <view class="modal-switch-item-name" >停止</view>
-        <image wx:if="{{valveSwitch == -1}}" style="width: 30rpx; height: 30rpx;" src="../../icon/icon-leftarrow.png"></image>
+        <image wx:if="{{openControl == 0}}" style="width: 30rpx; height: 30rpx;" src="../../icon/icon-leftarrow.png"></image>
       </view>
 
     </view>

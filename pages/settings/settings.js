@@ -167,10 +167,6 @@ Page({
     this.hideModifyDeviceNameDialog()
   },
 
-
-
-
-
   /* 删除设备弹出框 相关函数 */
   showDeleteDeviceDialog: function () {
     this.setData({
@@ -184,15 +180,32 @@ Page({
     })
   },
 
-  deleteDevice: function () {
-    // To do: 加入删除设备请求
+  requestDeleteDevice:function () {
+    var that = this;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
 
-    console.log("Deleted!");
-    wx.showToast({
-      title: '删除设备成功',
-      icon: 'success',
-      duration: 1000
+    wx.request({
+      url: 'https://swv.wuwz.net/delDevice?openID=' + encodeURIComponent(openID)
+        + '&device_id=' + encodeURIComponent(device_id),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+          that.checkResult()
+        if (that.data.result == 2)
+          console.log("无权限")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
     })
+  },
+
+  deleteDevice: function () {
+    this.requestDeleteDevice();
     this.hideDeleteDeviceDialog();
     wx.navigateBack({
       delta: 1,

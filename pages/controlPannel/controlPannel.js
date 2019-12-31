@@ -25,21 +25,27 @@ Page({
     },
 
     // 弹窗显示控制
-    showControlDialog: false,
+    openControlDialogVisible: false,
     modifyPositionDialogVisible: false,
-    showLockedrotorTimeDialog: false,
-
-    // 参数和它的值
-    /* 阀门开与关 1：打开 0 关闭 -1 停止 */
-    valveSwitch: 1,
-
+    controlTypeDialogVisible: false,
+    modifyAccuracyDialogVisible: false,
+    
+    /* 阀门开关量 2: 打开 1: 关闭 0: 停止 */
+    openControl: '',
 
     /* 阀门开度 */
     position: '',
     positionToDisplay: '',
 
-    lockedrotorTime: '14',
-    lockedrotorTimeChange: ''
+    /* 控制方式 1：高字节 2：低字节 */
+    controlType: '',
+
+    /* 控制精度 */
+    accuracy: '',
+    accuracyToDisplay: '',
+
+    /* 保存返回结果 */
+    result: ''
   },
 
   /**
@@ -76,7 +82,11 @@ Page({
         + '&device_id=' + encodeURIComponent(device_id),
       success: function (res) {
         that.setData({
-          deviceInfo: res.data
+          deviceInfo: res.data,
+          position: res.data.position,
+          openControl: res.data.open_ctrl,
+          controlType: res.data.ctrl_type,
+          accuracy: res.data.accuracy
         })
       }
     });
@@ -138,7 +148,13 @@ Page({
     })  
   },
 
+  /**
+   * 阀门操作页面
+   */
+
   /* 修改阀门开度弹窗 相关函数 */
+  preventTouchMove: function () {},
+
   showModifyPositionDialog: function () {
     this.setData({
       modifyPositionDialogVisible: true,
@@ -202,95 +218,218 @@ Page({
   },
 
 
-
-
-
-
-
-
-  showControlModal: function () {
+  /* 修改阀门开关量 相关函数 */
+  showOpenControlDialog: function () {
     this.setData({
-      showControlDialog: true
+      openControlDialogVisible: true
     })
   },
 
-  hideControlModal: function () {
+  hideOpenControlDialog: function () {
     this.setData({
-      showControlDialog: false
+      openControlDialogVisible: false
     })
   },
 
-  openControl: function () {
+  requestOpenControl: function () {
+    var that = this;
+    var openControl = this.data.openControl;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/OpenDeviceCtrl?openID=' + encodeURIComponent(openID)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&type=' + encodeURIComponent(openControl),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+          console.log("操作成功")
+        if (that.data.result == 2)
+          console.log("无权限")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
+    })
+  },
+
+  openValve: function () {
     this.setData({
-      valveSwitch: 1
+      openControl: 2
     });
+    // console.log(this.data.openControl);
+    this.requestOpenControl();
     wx.showToast({
       title: '已经打开',
       icon: 'success',
       duration: 1000
     });
-    this.hideControlModal();
+    this.hideOpenControlDialog();
   },
 
-  closeControl: function () {
+  closeValve: function () {
     this.setData({
-      valveSwitch: 0
+      openControl: 1
     });
+    // console.log(this.data.openControl);
+    this.requestOpenControl();
     wx.showToast({
       title: '已经关闭',
       icon: 'success',
       duration: 1000
     })
-    this.hideControlModal();
+    this.hideOpenControlDialog();
   },
 
-  stopControl: function () {
+  stopValve: function () {
     this.setData({
-      valveSwitch: -1
+      openControl: 0
     });
+    // console.log(this.data.openControl);
+    this.requestOpenControl();
     wx.showToast({
       title: '已经停止',
       icon: 'success',
       duration: 1000
     })
-    this.hideControlModal();
+    this.hideOpenControlDialog();
   },
 
-  showLockedrotorTimeModal: function () {
+  /**
+   * 参数设置 页面
+   */
+
+  /* 修改控制方式弹窗 相关函数 */
+  showControlTypeDialog: function () {
     this.setData({
-      showLockedrotorTimeDialog: true,
-      lockedrotorTimeChange: this.data.lockedrotorTime
+      controlTypeDialogVisible: true
     })
   },
 
-  hideLockedrotorTimeModal: function () {
+  hideControlTypeDialog: function () {
     this.setData({
-      showLockedrotorTimeDialog: false
+      controlTypeDialogVisible: false
     })
   },
 
-  inputLockedrotorTime: function (e) {
-    this.setData({
-      lockedrotorTimeChange: e.detail.value
+  requestControlType: function () {
+    var that = this;
+    var controlType = this.data.controlType;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/setCtrlType?type=' + encodeURIComponent(controlType)
+        + '&openID=' + encodeURIComponent(openID)
+        + '&device_id=' + encodeURIComponent(device_id),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+          console.log("操作成功")
+        if (that.data.result == 2)
+          console.log("无权限")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
     })
   },
 
-  confirmLockedrotorTime: function () {
-    if (!this.data.lockedrotorTimeChange) return
+  highByte: function () {
     this.setData({
-      lockedrotorTime: this.data.lockedrotorTimeChange,
-      lockedrotorTimeChange: ''
+      controlType: 1
+    });
+    // console.log(this.data.openControl);
+    this.requestControlType();
+    wx.showToast({
+      title: '控制方式改为高字节',
+      icon: 'success',
+      duration: 1000
+    });
+    this.hideControlTypeDialog();
+  },
+
+  lowByte: function () {
+    this.setData({
+      controlType: 2
+    });
+    // console.log(this.data.openControl);
+    this.requestControlType();
+    wx.showToast({
+      title: '控制方式改为低字节',
+      icon: 'success',
+      duration: 1000
     })
-    this.hideLockedrotorTimeModal()
+    this.hideControlTypeDialog();
   },
 
-  cancelLockedrotorTime: function () {
-    this.hideLockedrotorTimeModal();
+  /* 修改控制精度弹窗 相关函数 */
+  showModifyAccuracyDialog: function () {
+    this.setData({
+      modifyAccuracyDialogVisible: true,
+      accuracyToDisplay: this.data.deviceInfo.accuracyToDisplay
+    })
   },
 
-  clearLockedrotorTime: function () {
-    this.setData({ lockedrotorTimeChange: this.data.lockedrotorTime })
+  hideModifyAccuracyDialog: function () {
+    this.setData({
+      modifyAccuracyDialogVisible: false
+    })
   },
 
-  preventTouchMove: function () {}
+  inputAccuracy: function (e) {
+    this.setData({
+      accuracyToDisplay: e.detail.value
+    })
+  },
+
+  clearAccuracy: function (e) {
+    this.setData({
+      accuracyToDisplay: ''
+    })
+  },
+
+  requestModifyAccuracy: function () {
+    var that = this;
+    var accuracy = this.data.accuracy;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/setAccuracy?accuracy=' + encodeURIComponent(accuracy)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+          console.log("操作成功")
+        if (that.data.result == 2)
+          console.log("无权限")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
+    })
+  },
+
+  confirmModifyAccuracy: function () {
+    if (!this.data.accuracyToDisplay)
+      return;
+    this.setData({
+      accuracy: this.data.accuracyToDisplay,
+      accuracyToDisplay: ''
+    });
+    this.requestModifyAccuracy();
+    this.hideModifyAccuracyDialog();
+  },
 })
