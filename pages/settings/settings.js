@@ -13,10 +13,13 @@ Page({
     showNameToDisplay: "",
     remark: "",
     remarkToDisplay: "",
+    team: "",
+    teamName: "",
 
     /* 弹窗显示控制 */
     modifyDeviceNameDialogVisible: false,
     deleteDeviceDialogVisible: false,
+    deviceGroupingDialogVisible: false,
 
     result: null
   },
@@ -28,7 +31,9 @@ Page({
     this.setData({
       device_id: decodeURIComponent(options.device_id),
       show_name: decodeURIComponent(options.show_name),
-      remark: decodeURIComponent(options.remark)
+      remark: decodeURIComponent(options.remark),
+      team: decodeURIComponent(options.team),
+      teamName: decodeURIComponent(options.teamName)
     })
   },
 
@@ -210,6 +215,87 @@ Page({
     wx.navigateBack({
       delta: 1,
     })
-  }
+  },
 
+
+  /* 设备分组弹出框 相关函数 */
+  showDeviceGroupingDialog: function () {
+    this.setData({
+      deviceGroupingDialogVisible: true,
+      teamToDisplay: this.data.team,
+      teamNameToDisplay: this.data.teamName
+    })
+  },
+
+  hideDeviceGroupingDialog: function () {
+    this.setData({
+      deviceGroupingDialogVisible: false
+    })
+  },
+
+  inputTeam: function (e) {
+    this.setData({
+      teamToDisplay: e.detail.value
+    })
+  },
+
+  inputTeamName: function (e) {
+    this.setData({
+      teamNameToDisplay: e.detail.value
+    })
+  },
+
+  clearTeam: function () {
+    this.setData({
+      teamToDisplay: ""
+    })
+  },
+
+  clearTeamName: function () {
+    this.setData({
+      teamNameToDisplay: ""
+    })
+  },
+
+  requestDeviceGrouping: function () {
+    var that = this;
+    var team = this.data.team;
+    var teamName = this.data.teamName;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      // https://swv.wuwz.net/setDeviceTeam?openID=100000000151&device_id=100001&team=1&team_name=highTeam
+      url: 'https://swv.wuwz.net/setDeviceTeam?openID=' + encodeURIComponent(openID)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&team=' + encodeURIComponent(team)
+        + '&team_name=' + encodeURIComponent(teamName),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+          that.checkResult()
+        if (that.data.result == 2)
+          console.log("无权限")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
+    })
+  },
+
+  confirmDeviceGrouping: function () {
+    if (!this.data.teamToDisplay || !this.data.teamNameToDisplay)
+      return
+    this.setData({
+      team: this.data.teamToDisplay,
+      teamName: this.data.teamNameToDisplay,
+      teamToDisplay: "",
+      teamNameToDisplay: ""
+    })
+    this.requestDeviceGrouping()
+    this.hideDeviceGroupingDialog()
+  }
 })

@@ -24,7 +24,7 @@
 	获取用户控制权限  
 	检测用户权限，如果没有权限弹出输入密码框以获取权限  
 
-- [ ] URL/setDeviceTeam  
+- [x] URL/setDeviceTeam  
 	设备分组  
 
 - [x] URL/UserDevices  
@@ -53,9 +53,15 @@
 
 - [ ] URL/DeviceHistoryInfo  
         获取某设备相关的运行历史
-- [ ] URL/addAccessCtrlUsers 
-        为某用户授权某设备的权限
-- [] URL/getAccessCtrlUsers
-        获取拥有某设备的账户列表及详情
-- [] URL/delAccessCtrlUsers
-        删除某用户对于某设备的所有权限
+	
+- [ ] URL/addAccessCtrlUsers  
+        为某用户授权某设备的权限  
+	
+- [ ] URL/getAccessCtrlUsers  
+        获取拥有某设备的账户列表及详情  
+	
+- [ ] URL/delAccessCtrlUsers  
+        删除某用户对于某设备的所有权限  
+	
+	
+deepwidth 测试  

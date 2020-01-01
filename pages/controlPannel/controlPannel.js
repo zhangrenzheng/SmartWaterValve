@@ -374,7 +374,7 @@ Page({
   showModifyAccuracyDialog: function () {
     this.setData({
       modifyAccuracyDialogVisible: true,
-      accuracyToDisplay: this.data.deviceInfo.accuracyToDisplay
+      accuracyToDisplay: this.data.deviceInfo.accuracy
     })
   },
 
