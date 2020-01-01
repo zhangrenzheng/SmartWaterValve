@@ -24,7 +24,7 @@
 	获取用户控制权限  
 	检测用户权限，如果没有权限弹出输入密码框以获取权限  
 
-- [ ] URL/setDeviceTeam  
+- [x] URL/setDeviceTeam  
 	设备分组  
 
 - [x] URL/UserDevices  

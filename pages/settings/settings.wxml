@@ -32,8 +32,20 @@
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
-  <view class="settings-item-without-border-bottom">
+  <view class="settings-item">
+    <view class="settings-item-name">设备控制密码</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+
+  <view class="settings-item">
     <view class="settings-item-name">用户权限管理</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+
+  <view class="settings-item-without-border-bottom" bindtap="showDeviceGroupingDialog">
+    <view class="settings-item-name">设备分组</view>
+    <view class="settings-item-name-devicename">{{team}} 组 </view>
+    <view class="settings-item-name-devicename">{{teamName}}</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
 </view> 
@@ -48,14 +60,14 @@
     <view class="modal-title">修改设备名称</view>
     <view class="modal-content" style="margin-bottom: 10rpx;">
         <input type="text" class="modal-input" 
-          placeholder="请输入" value="{{showNameToDisplay}}"
+          placeholder="请输入设备名称" value="{{showNameToDisplay}}"
           bindinput="inputShowName" 
           bindconfirm="confirmModifyDeviceName" />
         <icon type="cancel" size='20' bindtap="clearShowName"></icon>
     </view>
     <view class="modal-content">
         <input type="text" class="modal-input" 
-          placeholder="请输入" value="{{remarkToDisplay}}"
+          placeholder="请输入备注信息" value="{{remarkToDisplay}}"
           bindinput="inputRemark" 
           bindconfirm="confirmModifyDeviceName" />
         <icon type="cancel" size='20' bindtap="clearRemark"></icon>
@@ -74,5 +86,31 @@
     <view class="modal-footer">
         <view class="modal-cancel" bindtap="hideDeleteDeviceDialog">取消</view>
         <view class="modal-confirm" bindtap="deleteDevice">确认</view>
+    </view>
+</view>
+
+<!-- 设备分组弹窗 -->
+<view class="modal-mask" bindtap="hideDeviceGroupingDialog"
+    catchtouchmove="preventTouchMove" wx:if="{{deviceGroupingDialogVisible}}">
+</view>
+<view class="modal-dialog" wx:if="{{deviceGroupingDialogVisible}}">
+    <view class="modal-title">设备分组</view>
+    <view class="modal-content" style="margin-bottom: 10rpx;">
+        <input type="text" class="modal-input" 
+          placeholder="请输入分组号：1 - 10" value="{{teamToDisplay}}"
+          bindinput="inputTeam" 
+          bindconfirm="confirmDeviceGrouping" />
+        <icon type="cancel" size='20' bindtap="clearTeam"></icon>
+    </view>
+    <view class="modal-content">
+        <input type="text" class="modal-input" 
+          placeholder="请输入分组名称" value="{{teamNameToDisplay}}"
+          bindinput="inputTeamName" 
+          bindconfirm="confirmDeviceGrouping" />
+        <icon type="cancel" size='20' bindtap="clearTeamName"></icon>
+    </view>
+    <view class="modal-footer">
+        <view class="modal-cancel" bindtap="hideDeviceGroupingDialog">取消</view>
+        <view class="modal-confirm" bindtap="confirmDeviceGrouping">确认</view>
     </view>
 </view>

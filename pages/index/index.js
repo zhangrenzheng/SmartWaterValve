@@ -97,10 +97,15 @@ Page({
     var device_id = this.data.deviceList[e.target.id].device_id;
     var show_name = this.data.deviceList[e.target.id].show_name;
     var remark = this.data.deviceList[e.target.id].remark;
+    var team = this.data.deviceList[e.target.id].team;
+    var teamName = this.data.deviceList[e.target.id].team_name;
     
     wx.navigateTo({
-      url: "/pages/settings/settings?device_id=" + encodeURIComponent(device_id) +
-        "&show_name=" + encodeURIComponent(show_name) + "&remark=" + encodeURIComponent(remark),
+      url: "/pages/settings/settings?device_id=" + encodeURIComponent(device_id)
+        + "&show_name=" + encodeURIComponent(show_name)
+        + "&remark=" + encodeURIComponent(remark)
+        + "&team=" + encodeURIComponent(team)
+        + "&teamName=" + encodeURIComponent(teamName),
     })
   },
 
