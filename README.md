@@ -16,7 +16,7 @@
 - [x] URL/delDevice  
 	删除设备  
 
-- [ ] URL/startAccessCtrl  
+- [x] URL/startAccessCtrl  
 	获取管理员身份  
 	制作输入管理员密码弹出框  
 
