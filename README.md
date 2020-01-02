@@ -48,7 +48,7 @@
 - [x] URL/UpdateDeviceName  
 	修改设备名称和备注  
 
-- [ ] URL/updateAccessCtrlPassword  
+- [x] URL/updateAccessCtrlPassword  
 	修改控制密码  
 
 - [ ] URL/DeviceHistoryInfo  
