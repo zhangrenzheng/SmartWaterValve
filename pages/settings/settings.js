@@ -15,6 +15,7 @@ Page({
     remarkToDisplay: "",
     accessCtrl: "",
     accessControlPassword: "",
+    accessControlPasswordToUpdate: "",
     team: "",
     teamName: "",
 
@@ -23,6 +24,7 @@ Page({
     deleteDeviceDialogVisible: false,
     deviceGroupingDialogVisible: false,
     enableAccessDialogVisible: false,
+    updateAccessCtrlPasswordDialogVisible: false,
 
     result: null
   },
@@ -286,6 +288,65 @@ Page({
     this.hideEnableAccessDialog()
   },
 
+  /* 修改设备控制密码弹出框 相关函数 */
+  showUpdateAccessCtrlPasswordDialog: function () {
+    this.setData({
+      updateAccessCtrlPasswordDialogVisible: true,
+    })
+  },
+
+  hideUpdateAccessCtrlPasswordDialog: function () {
+    this.setData({
+      updateAccessCtrlPasswordDialogVisible: false
+    })
+  },
+
+  inputAccessControlPasswordToUpdate: function (e) {
+    this.setData({
+      accessControlPasswordToUpdate: e.detail.value
+    })
+  },
+
+  clearAccessControlPasswordToUpdate: function () {
+    this.setData({
+      accessControlPasswordToUpdate: ""
+    })
+  },
+
+  requestUpdateAccessCtrlPassword: function () {
+    var that = this;
+    var accessControlPasswordToUpdate = this.data.accessControlPasswordToUpdate;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/updateAccessCtrlPassword?cPassword=' + encodeURIComponent(accessControlPasswordToUpdate)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+        {
+          that.checkResult()
+        }
+        if (that.data.result == 2)
+          console.log("无权限")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
+    })
+  },
+
+  confirmUpdateAccessCtrlPassword: function () {
+    if (!this.data.accessControlPasswordToUpdate)
+      return
+    this.requestUpdateAccessCtrlPassword()
+    this.hideUpdateAccessCtrlPasswordDialog()
+  },
 
   /* 设备分组弹出框 相关函数 */
   showDeviceGroupingDialog: function () {
