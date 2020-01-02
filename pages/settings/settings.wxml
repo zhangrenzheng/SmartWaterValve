@@ -27,13 +27,22 @@
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
-  <view class="settings-item">
+  <view wx:if="{{accessCtrl == 0}}" class="settings-item" bindtap="showEnableAccessDialog">
     <view class="settings-item-name">启用访问权限</view>
+    <view class="settings-item-name-devicename">未启用</view>
+    <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
+  </view>
+
+  <view wx:if="{{accessCtrl == 1}}" class="settings-item">
+    <view class="settings-item-name">启用访问权限</view>
+    <view class="settings-item-name-devicename">已启用</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
   <view class="settings-item">
     <view class="settings-item-name">设备控制密码</view>
+    <view wx:if="{{accessCtrl == 1}}" class="settings-item-name-devicename">默认密码: 123456</view>
+    <view wx:if="{{accessCtrl == 0}}" class="settings-item-name-devicename">未启用访问权限</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
@@ -78,14 +87,22 @@
     </view>
 </view>
 
-<!-- 删除设备弹窗 -->
-<view class="modal-mask" bindtap="hideDeleteDeviceDialog" 
-    catchtouchmove="preventTouchMove" wx:if="{{deleteDeviceDialogVisible}}"></view>
-<view class="modal-dialog" wx:if="{{deleteDeviceDialogVisible}}">
-    <view class="modal-title">是否要删除该设备？</view>
+<!-- 启用访问权限弹窗 -->
+<view class="modal-mask" bindtap="hideEnableAccessDialog"
+    catchtouchmove="preventTouchMove" wx:if="{{enableAccessDialogVisible}}">
+</view>
+<view class="modal-dialog" wx:if="{{enableAccessDialogVisible}}">
+    <view class="modal-title">权限启用密码</view>
+    <view class="modal-content" style="margin-bottom: 10rpx;">
+        <input type="text" class="modal-input" password
+          placeholder="请输入密码" value="{{accessControlPassword}}"
+          bindinput="inputAccessControlPassword" 
+          bindconfirm="confirmEnableAccess" />
+        <icon type="cancel" size='20' bindtap="clearAccessControlPassword"></icon>
+    </view>
     <view class="modal-footer">
-        <view class="modal-cancel" bindtap="hideDeleteDeviceDialog">取消</view>
-        <view class="modal-confirm" bindtap="deleteDevice">确认</view>
+        <view class="modal-cancel" bindtap="hideEnableAccessDialog">取消</view>
+        <view class="modal-confirm" bindtap="confirmEnableAccess">确认</view>
     </view>
 </view>
 
@@ -112,5 +129,16 @@
     <view class="modal-footer">
         <view class="modal-cancel" bindtap="hideDeviceGroupingDialog">取消</view>
         <view class="modal-confirm" bindtap="confirmDeviceGrouping">确认</view>
+    </view>
+</view>
+
+<!-- 删除设备弹窗 -->
+<view class="modal-mask" bindtap="hideDeleteDeviceDialog" 
+    catchtouchmove="preventTouchMove" wx:if="{{deleteDeviceDialogVisible}}"></view>
+<view class="modal-dialog" wx:if="{{deleteDeviceDialogVisible}}">
+    <view class="modal-title">是否要删除该设备？</view>
+    <view class="modal-footer">
+        <view class="modal-cancel" bindtap="hideDeleteDeviceDialog">取消</view>
+        <view class="modal-confirm" bindtap="deleteDevice">确认</view>
     </view>
 </view>

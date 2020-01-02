@@ -158,7 +158,7 @@ Page({
   showModifyPositionDialog: function () {
     this.setData({
       modifyPositionDialogVisible: true,
-      positionToDisplay: this.data.deviceInfo.position
+      positionToDisplay: this.data.position
     })
   },
 
@@ -374,7 +374,7 @@ Page({
   showModifyAccuracyDialog: function () {
     this.setData({
       modifyAccuracyDialogVisible: true,
-      accuracyToDisplay: this.data.deviceInfo.accuracy
+      accuracyToDisplay: this.data.accuracy
     })
   },
 

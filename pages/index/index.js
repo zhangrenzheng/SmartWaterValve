@@ -99,13 +99,15 @@ Page({
     var remark = this.data.deviceList[e.target.id].remark;
     var team = this.data.deviceList[e.target.id].team;
     var teamName = this.data.deviceList[e.target.id].team_name;
+    var accessCtrl = this.data.deviceList[e.target.id].access_ctrl;
     
     wx.navigateTo({
       url: "/pages/settings/settings?device_id=" + encodeURIComponent(device_id)
         + "&show_name=" + encodeURIComponent(show_name)
         + "&remark=" + encodeURIComponent(remark)
         + "&team=" + encodeURIComponent(team)
-        + "&teamName=" + encodeURIComponent(teamName),
+        + "&teamName=" + encodeURIComponent(teamName)
+        + "&accessCtrl=" + encodeURIComponent(accessCtrl),
     })
   },
 

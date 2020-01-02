@@ -13,6 +13,8 @@ Page({
     showNameToDisplay: "",
     remark: "",
     remarkToDisplay: "",
+    accessCtrl: "",
+    accessControlPassword: "",
     team: "",
     teamName: "",
 
@@ -20,6 +22,7 @@ Page({
     modifyDeviceNameDialogVisible: false,
     deleteDeviceDialogVisible: false,
     deviceGroupingDialogVisible: false,
+    enableAccessDialogVisible: false,
 
     result: null
   },
@@ -33,7 +36,8 @@ Page({
       show_name: decodeURIComponent(options.show_name),
       remark: decodeURIComponent(options.remark),
       team: decodeURIComponent(options.team),
-      teamName: decodeURIComponent(options.teamName)
+      teamName: decodeURIComponent(options.teamName),
+      accessCtrl: decodeURIComponent(options.accessCtrl)
     })
   },
 
@@ -217,6 +221,71 @@ Page({
     })
   },
 
+  /* 启用访问权限弹出框 相关函数 */
+  showEnableAccessDialog: function () {
+    this.setData({
+      enableAccessDialogVisible: true,
+    })
+  },
+
+  hideEnableAccessDialog: function () {
+    this.setData({
+      enableAccessDialogVisible: false
+    })
+  },
+
+  inputAccessControlPassword: function (e) {
+    this.setData({
+      accessControlPassword: e.detail.value
+    })
+  },
+
+  clearAccessControlPassword: function () {
+    this.setData({
+      accessControlPassword: ""
+    })
+  },
+
+  requestEnableAccess: function () {
+    var that = this;
+    var accessControlPassword = this.data.accessControlPassword;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/startAccessCtrl?apassword=' + encodeURIComponent(accessControlPassword)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+        {
+          that.checkResult()
+          that.setData({
+            accessCtrl: 1
+          })
+        }
+        if (that.data.result == 2)
+          console.log("此设备已有管理员")
+        if (that.data.result == 3)
+          console.log("未找到设备或用户")
+        if (that.data.result == 0)
+          console.log("密码错误")
+      }
+    })
+  },
+
+  confirmEnableAccess: function () {
+    if (!this.data.accessControlPassword)
+      return
+    this.requestEnableAccess()
+    this.hideEnableAccessDialog()
+  },
+
 
   /* 设备分组弹出框 相关函数 */
   showDeviceGroupingDialog: function () {
@@ -265,7 +334,6 @@ Page({
     var openID = this.data.openID;
 
     wx.request({
-      // https://swv.wuwz.net/setDeviceTeam?openID=100000000151&device_id=100001&team=1&team_name=highTeam
       url: 'https://swv.wuwz.net/setDeviceTeam?openID=' + encodeURIComponent(openID)
         + '&device_id=' + encodeURIComponent(device_id)
         + '&team=' + encodeURIComponent(team)
