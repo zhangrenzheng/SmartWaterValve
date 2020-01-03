@@ -63,7 +63,7 @@
     </swiper-item>
 
     <swiper-item>
-      <include src="myinfo.wxml" />
+      <include src="login.wxml" />
     </swiper-item>
 
   </swiper>
