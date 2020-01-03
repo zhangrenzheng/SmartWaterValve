@@ -51,7 +51,7 @@
 - [x] URL/updateAccessCtrlPassword  
 	修改控制密码  
 
-- [ ] URL/DeviceHistoryInfo  
+- [x] URL/DeviceHistoryInfo  
         获取某设备相关的运行历史
 	
 - [ ] URL/addAccessCtrlUsers  
