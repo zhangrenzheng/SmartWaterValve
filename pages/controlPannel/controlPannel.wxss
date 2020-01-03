@@ -76,6 +76,35 @@ page {
   flex: 1;
 }
 
+.date-block {
+  background: #fff;
+  margin-top: 30rpx;
+}
+
+.date-block-date {
+  display: flex;
+  align-items: center;
+  font-size: 25rpx;
+  color: hsl(0, 0%, 33%);
+  height: 50rpx;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+}
+
+.date-block-item {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  border-top: 1rpx solid #afafaf;
+}
+
+.date-block-item-log {
+  margin-left: 25rpx;
+  flex: 1;
+}
+
 /* 弹框里面的各种样式 */
 .modal-mask {
     width: 100%;

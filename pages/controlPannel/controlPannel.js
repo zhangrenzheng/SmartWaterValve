@@ -23,6 +23,7 @@ Page({
     deviceInfo: {
 
     },
+    deviceLog: [],
 
     // 弹窗显示控制
     openControlDialogVisible: false,
@@ -96,6 +97,15 @@ Page({
         })
       }
     });
+
+    wx.request({
+      url: 'https://swv.wuwz.net/DeviceHistoryInfo?device_id=' + encodeURIComponent(device_id),
+      success: function (res) {
+        that.setData({
+          deviceLog: res.data
+        })
+      }
+    })
   },
 
   /**

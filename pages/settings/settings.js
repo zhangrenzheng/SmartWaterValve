@@ -482,5 +482,14 @@ Page({
       return
     this.requestGetAccessControl()
     this.hideGetAccessControlDialog()
+  },
+
+  /* 跳转到日志页面 */
+  jumpToLog: function (e) {
+    var device_id = this.data.device_id;
+
+    wx.navigateTo({
+      url: "/pages/log/log?device_id=" + encodeURIComponent(device_id),
+    })
   }
 })

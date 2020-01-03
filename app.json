@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/settings/settings",
-    "pages/controlPannel/controlPannel"
+    "pages/controlPannel/controlPannel",
+    "pages/log/log"
   ],
   "window": {
     "backgroundTextStyle": "light",

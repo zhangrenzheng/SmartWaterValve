@@ -17,7 +17,7 @@
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
   
-  <view class="settings-item">
+  <view class="settings-item" bindtap="jumpToLog">
     <view class="settings-item-name">系统日志</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
