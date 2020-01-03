@@ -57,7 +57,7 @@
 - [ ] URL/addAccessCtrlUsers  
         为某用户授权某设备的权限  
 	
-- [ ] URL/getAccessCtrlUsers  
+- [x] URL/getAccessCtrlUsers  
         获取拥有某设备的账户列表及详情  
 	
 - [ ] URL/delAccessCtrlUsers  
