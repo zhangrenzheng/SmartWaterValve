@@ -166,3 +166,22 @@
         <view class="modal-confirm" bindtap="deleteDevice">确认</view>
     </view>
 </view>
+
+<!-- 获取用户控制权限弹出框弹窗 -->
+<view class="modal-mask" bindtap="hideGetAccessControlDialog"
+    catchtouchmove="preventTouchMove" wx:if="{{getAccessControlDialogVisible}}">
+</view>
+<view class="modal-dialog" wx:if="{{getAccessControlDialogVisible}}">
+    <view class="modal-title">无权限，请输入控制密码</view>
+    <view class="modal-content" style="margin-bottom: 10rpx;">
+        <input type="text" class="modal-input" password
+          placeholder="请输入密码" value="{{controlPassword}}"
+          bindinput="inputControlPassword" 
+          bindconfirm="confirmGetAccessControl" />
+        <icon type="cancel" size='20' bindtap="clearControlPassword"></icon>
+    </view>
+    <view class="modal-footer">
+        <view class="modal-cancel" bindtap="hideGetAccessControlDialog">取消</view>
+        <view class="modal-confirm" bindtap="confirmGetAccessControl">确认</view>
+    </view>
+</view>

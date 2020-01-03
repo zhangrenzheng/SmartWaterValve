@@ -18,6 +18,7 @@ Page({
     accessControlPasswordToUpdate: "",
     team: "",
     teamName: "",
+    controlPassword: '',
 
     /* 弹窗显示控制 */
     modifyDeviceNameDialogVisible: false,
@@ -25,6 +26,7 @@ Page({
     deviceGroupingDialogVisible: false,
     enableAccessDialogVisible: false,
     updateAccessCtrlPasswordDialogVisible: false,
+    getAccessControlDialogVisible: false,
 
     result: null
   },
@@ -92,12 +94,6 @@ Page({
 
   },
 
-  checkResult: function () {
-    console.log("操作成功")
-  },
-
-
-
   /* 修改设备名称弹出框 相关函数 */
   showModifyDeviceNameDialog: function () {
     this.setData({
@@ -139,14 +135,14 @@ Page({
 
   requestModifyDeviceName: function () {
     var that = this;
-    var show_name = this.data.show_name;
-    var remark = this.data.remark;
+    var showNameToDisplay = this.data.showNameToDisplay;
+    var remarkToDisplay = this.data.remarkToDisplay;
     var device_id = this.data.device_id;
     var openID = this.data.openID;
 
     wx.request({
-      url: 'https://swv.wuwz.net/UpdateDeviceName?remark=' + encodeURIComponent(remark) +
-        '&show_name=' + encodeURIComponent(show_name)
+      url: 'https://swv.wuwz.net/UpdateDeviceName?remark=' + encodeURIComponent(remarkToDisplay) +
+        '&show_name=' + encodeURIComponent(showNameToDisplay)
         + '&device_id=' + encodeURIComponent(device_id)
         + '&openID=' + encodeURIComponent(openID),
 
@@ -156,9 +152,21 @@ Page({
         })
 
         if (that.data.result == 1)
-          that.checkResult()
+        {
+          console.log("操作成功");
+          that.setData({
+            show_name: that.data.showNameToDisplay,
+            remark: that.data.remarkToDisplay,
+            showNameToDisplay: "",
+            remarkToDisplay: ""
+          })
+        }
         if (that.data.result == 2)
-          console.log("无权限")
+        {
+          console.log("无权限");
+          that.hideModifyDeviceNameDialog();
+          that.showGetAccessControlDialog();
+        }
         if (that.data.result == 0)
           console.log("操作失败")
       }
@@ -168,12 +176,6 @@ Page({
   confirmModifyDeviceName: function () {
     if (!this.data.showNameToDisplay || !this.data.remarkToDisplay)
       return
-    this.setData({
-      show_name: this.data.showNameToDisplay,
-      remark: this.data.remarkToDisplay,
-      showNameToDisplay: "",
-      remarkToDisplay: ""
-    })
     this.requestModifyDeviceName()
     this.hideModifyDeviceNameDialog()
   },
@@ -207,8 +209,6 @@ Page({
 
         if (that.data.result == 1)
           that.checkResult()
-        if (that.data.result == 2)
-          console.log("无权限")
         if (that.data.result == 0)
           console.log("操作失败")
       }
@@ -426,5 +426,61 @@ Page({
     })
     this.requestDeviceGrouping()
     this.hideDeviceGroupingDialog()
+  },
+
+  /* 获取用户控制权限弹出框 相关函数 */
+  showGetAccessControlDialog: function () {
+    this.setData({
+      getAccessControlDialogVisible: true,
+    })
+  },
+
+  hideGetAccessControlDialog: function () {
+    this.setData({
+      getAccessControlDialogVisible: false
+    })
+  },
+
+  inputControlPassword: function (e) {
+    this.setData({
+      controlPassword: e.detail.value
+    })
+  },
+
+  clearControlPassword: function () {
+    this.setData({
+      controlPassword: ""
+    })
+  },
+
+  requestGetAccessControl: function () {
+    var that = this;
+    var controlPassword = this.data.controlPassword;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/getAccessCtrl?cpassword=' + encodeURIComponent(controlPassword)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+          console.log("操作成功")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
+    })
+  },
+
+  confirmGetAccessControl: function () {
+    if (!this.data.controlPassword)
+      return
+    this.requestGetAccessControl()
+    this.hideGetAccessControlDialog()
   }
 })
