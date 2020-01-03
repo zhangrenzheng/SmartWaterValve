@@ -51,7 +51,7 @@
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
-  <view class="settings-item">
+  <view class="settings-item" bindtap="jumpToAuthorityManagement">
     <view class="settings-item-name">用户权限管理</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>

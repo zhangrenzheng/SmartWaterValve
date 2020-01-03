@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/settings/settings",
     "pages/controlPannel/controlPannel",
-    "pages/log/log"
+    "pages/log/log",
+    "pages/authorityManagement/authorityManagement"
   ],
   "window": {
     "backgroundTextStyle": "light",

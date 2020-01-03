@@ -1,0 +1,52 @@
+page {
+    display: flex;
+    flex-direction: column;
+    background: #f7f4f4;
+    /* page 文字颜色 */
+    color: #003333;
+    height: 100%;
+}
+
+.container {
+    flex: 1;
+    background: #fff;
+    margin-top: 30rpx;
+    border-top: 1rpx solid #afafaf;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    height: 130rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    border-bottom: 1rpx solid #afafaf;
+}
+
+.item:last-child {
+    display: flex;
+    align-items: center;
+    height: 130rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+}
+
+.item-user {
+    width: 200rpx;
+    text-align: left;
+}
+
+.item-authority {
+    width: 80rpx;
+    text-align: left;
+    font-size: 25rpx;
+}
+
+.item-method {
+    flex: 1;
+    text-align: center;
+}
+
+.item-method-second {
+    font-size: 25rpx;
+}

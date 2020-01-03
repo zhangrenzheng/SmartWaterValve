@@ -208,7 +208,9 @@ Page({
         })
 
         if (that.data.result == 1)
-          that.checkResult()
+        {
+          console.log("操作成功")
+        }
         if (that.data.result == 0)
           console.log("操作失败")
       }
@@ -266,7 +268,9 @@ Page({
 
         if (that.data.result == 1)
         {
-          that.checkResult()
+          {
+            console.log("操作成功")
+          }
           that.setData({
             accessCtrl: 1
           })
@@ -406,7 +410,9 @@ Page({
         })
 
         if (that.data.result == 1)
-          that.checkResult()
+        {
+          console.log("操作成功")
+        }
         if (that.data.result == 2)
           console.log("无权限")
         if (that.data.result == 0)
@@ -490,6 +496,15 @@ Page({
 
     wx.navigateTo({
       url: "/pages/log/log?device_id=" + encodeURIComponent(device_id),
+    })
+  },
+
+  /* 跳转到权限管理页面 */
+  jumpToAuthorityManagement: function (e) {
+    var device_id = this.data.device_id;
+
+    wx.navigateTo({
+      url: "/pages/authorityManagement/authorityManagement?device_id=" + encodeURIComponent(device_id),
     })
   }
 })
