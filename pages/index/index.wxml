@@ -4,7 +4,7 @@
     <swiper-item catchtouchmove='catchTouchMove'>
       <view class="container">
 
-        <view class="add-device" bindtap="addDevice"> 
+        <view class="add-device" bindtap="jumpToAddDevice"> 
           <text>添加设备</text>
         </view>
 
@@ -63,7 +63,7 @@
     </swiper-item>
 
     <swiper-item>
-      <include src="login.wxml" />
+      <include src="myinfo.wxml" />
     </swiper-item>
 
   </swiper>

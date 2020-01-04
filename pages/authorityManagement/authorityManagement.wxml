@@ -3,7 +3,7 @@
 
 <view class="container">
 
-    <view class="item" wx:for="{{accessCtrlUsers}}" wx:for-index="index" wx:key="index">
+    <view class="item" wx:for="{{accessCtrlUsers}}" wx:for-index="index" wx:key="index" id="{{index}}">
         <view class="item-user">{{util.sub(item.u_openid)}}</view>
         <view class="item-authority">访问</view>
         <view wx:if="{{item.a_access == 1 || item.p_access == 1}}" class="item-authority">控制</view>
@@ -13,7 +13,9 @@
             <view wx:if="{{item.a_access == 1 && item.p_access == 1}}" class="item-method-top">管理员</view>
             <view wx:if="{{item.a_access == 1 && item.p_access == 0}}" class="item-method-second">授权者: {{util.sub(item.a_openid)}}</view>
         </view>
-        <image style="margin-left: 20rpx; width: 40rpx; height: 40rpx;" src="../../icon/icon-delete.png"></image>
+        <image style="margin-left: 20rpx; width: 40rpx; height: 40rpx;" src="../../icon/icon-delete.png"
+            id="{{index}}" bindtap="showDeleteAccessControlUserDialog">
+        </image>
     </view>
 
 </view>

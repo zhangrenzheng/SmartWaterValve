@@ -1,10 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/addDevice/addDevice",
     "pages/settings/settings",
     "pages/controlPannel/controlPannel",
     "pages/log/log",
-    "pages/authorityManagement/authorityManagement"
+    "pages/authorityManagement/authorityManagement",
+    "pages/shareDevice/shareDevice"
   ],
   "window": {
     "backgroundTextStyle": "light",

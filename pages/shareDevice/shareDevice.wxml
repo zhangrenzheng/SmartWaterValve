@@ -1,0 +1,39 @@
+<!--pages/shareDevice/shareDevice.wxml-->
+<view class="container">
+    <view class="item">
+        <text >仅可访问</text>
+        <switch checked="{{switch1Checked}}" bindchange="switch1Change"/>
+    </view>
+
+    <view class="item-without-border-bottom">
+        <text >可访问可控制</text>
+        <switch checked="{{switch2Checked}}"bindchange="switch2Change"/>
+    </view>
+</view>
+
+<view class="container">
+   <view class="item-without-border-bottom" bindtap="showShareDeviceDialog">
+        <text >共享给手机号</text>
+        <image style="width: 17rpx; height: 34rpx; margin-right: 20rpx;" src="../../icon/icon-next.png"></image>
+   </view>
+</view>
+
+
+<!-- 设备分享弹窗 -->
+<view class="modal-mask" bindtap="hideShareDeviceDialog"
+    catchtouchmove="preventTouchMove" wx:if="{{shareDeviceDialogVisible}}">
+</view>
+<view class="modal-dialog" wx:if="{{shareDeviceDialogVisible}}">
+    <view class="modal-title">设备分享</view>
+    <view class="modal-content" style="margin-bottom: 10rpx;">
+        <input type="number" class="modal-input" 
+          placeholder="请输入用户手机号" value="{{userPhone}}"
+          bindinput="inputUserPhone" 
+          bindconfirm="confirmShareDevice" />
+        <icon type="cancel" size='20' bindtap="clearUserPhone"></icon>
+    </view>
+    <view class="modal-footer">
+        <view class="modal-cancel" bindtap="hideShareDeviceDialog">取消</view>
+        <view class="modal-confirm" bindtap="confirmShareDevice">确认</view>
+    </view>
+</view>

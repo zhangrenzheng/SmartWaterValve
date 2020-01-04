@@ -9,7 +9,9 @@ Page({
   data: {
     openID: app.globalData.openID,
     device_id: '',
-    accessCtrlUsers: []
+    accessCtrlUsers: [],
+
+    result: ''
   },
   /**
    * 生命周期函数--监听页面加载
@@ -77,5 +79,67 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  requestDeleteAccessControlUser: function (index) {
+    var that = this;
+    var a_openID = this.data.openID;
+    var device_id = this.data.accessCtrlUsers[index].device_id;
+    var openID = this.data.accessCtrlUsers[index].u_openid;
+    var accessCtrlUsers = this.data.accessCtrlUsers;
+
+
+    wx.request({
+      url: 'https://swv.wuwz.net/delAccessCtrlUsers?a_openID=' + encodeURIComponent(a_openID)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+        {
+          console.log("删除用户访问控制权限：操作成功")
+          accessCtrlUsers.splice(index, 1);
+        }
+        if (that.data.result == 2)
+        {
+          console.log("删除用户访问控制权限：无权限，不是管理员")
+        }
+        if (that.data.result == 3)
+          console.log("删除用户访问控制权限：管理员权限不可删除")
+          
+        if (that.data.result == 0)
+          console.log("删除用户访问控制权限：操作失败")
+
+        that.setData({
+          accessCtrlUsers
+        })
+      }
+    })
+
+  },
+
+  showDeleteAccessControlUserDialog: function (e) {
+    var that = this;
+    var index = e.target.id;
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除此用户权限？',
+      success: function (res) {
+        if (res.confirm)
+        {
+          console.log('点击确定了');
+          that.requestDeleteAccessControlUser(index);
+        }
+        else if (res.cancel)
+        {
+           console.log('点击取消了');
+           return false;
+        }
+      }
+    })
   }
 })
