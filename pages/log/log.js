@@ -14,6 +14,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
+      openID: app.globalData.openID,
       device_id: decodeURIComponent(options.device_id)
     })
   },

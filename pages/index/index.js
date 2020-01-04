@@ -30,7 +30,8 @@ Page({
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+        hasUserInfo: true,
+        openID: app.globalData.openID,
       })
     } else if (this.data.canIUse) {
       // 执行一个回调函数，因为可能getUserInfo会在page.onload之后才返回，回调函数可以防止这种情况
