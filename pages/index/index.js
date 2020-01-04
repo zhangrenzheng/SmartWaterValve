@@ -16,6 +16,11 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
+
+    // 添加设备的弹框,三个变量分别是添加设备弹框、序列号输入弹框、序列号
+    showAddDeviceDialog: false,
+    showInputSNDialog: false,
+    deviceSN: ''
   },
 
   /**
@@ -192,7 +197,7 @@ Page({
     }
   },
   // 退出登录
-  loginOut: function(){
+  logout: function(){
     app.globalData.userInfo = {}
     this.setData({
       hasUserInfo: false,
@@ -200,4 +205,67 @@ Page({
     })
     wx.clearStorage()
   },
+  // 分享页面
+  toShareDevice: function(e){
+    wx.navigateTo({
+      url: '/pages/shareDevice/shareDevice'
+    })
+  },
+  // 添加设备
+  preventTouchMove: function(){},
+  showAddDeviceModal: function(){
+    this.setData({
+      showAddDeviceDialog: true
+    })
+  },
+  hideAddDeviceModal: function(){
+    this.setData({
+      showAddDeviceDialog: false
+    })
+  },
+  showInputSNModal: function(){
+    this.setData({
+      showInputSNDialog: true
+    })
+  },
+  hideInputSNModal: function(){
+    this.setData({
+      showInputSNDialog: false
+    })
+  },
+  inputDeviceSN: function(e){
+    this.setData({
+      deviceSN: e.detail.value
+    })
+  },
+  confirmDeviceSN: function(e){
+    if(!this.data.deviceSN) return
+    this.hideAddDeviceModal()
+    this.hideInputSNModal()
+    // 调用函数添加设备
+    // function()
+    // 序列号归零
+    this.setData({
+      deviceSN: ''
+    })
+  },
+  showScanSNModal: function(){
+    var that = this
+    wx.scanCode({
+      success: res => {
+        that.setData({
+          deviceSN: res.result
+        })
+      }
+    })
+    that.hideAddDeviceModal()
+    that.hideInputSNModal()
+    // 调用函数添加设备
+    // function()
+    // 序列号归零
+    this.setData({
+      deviceSN: ''
+    })
+  }
+
 })

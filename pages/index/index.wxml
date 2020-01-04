@@ -4,7 +4,7 @@
     <swiper-item catchtouchmove='catchTouchMove'>
       <view class="container">
 
-        <view class="add-device" bindtap="addDevice"> 
+        <view class="add-device" bindtap="showAddDeviceModal"> 
           <text>添加设备</text>
         </view>
 
@@ -85,4 +85,29 @@
     <view class="tab-item-name" bindtap="changeItem" data-item="0">我的</view>
   </view>
 
+</view>
+
+<!-- 显示蒙层 -->
+<view class="modal-mask" bindtap="hideAddDeviceModal" 
+    catchtouchmove="preventTouchMove" wx:if="{{showAddDeviceDialog}}"></view>
+<view class="modal-dialog" wx:if="{{showAddDeviceDialog}}">
+    <view class="modal-title">添加设备</view>
+    <view class="modal-content">
+    <!-- 设备号添加 -->
+      <button bindtap="showInputSNModal" class="modal-btn">
+        <image src="/icon/input.png"></image>
+        <text>序列号</text>
+      </button>
+      <button bindtap="showScanSNModal" class="modal-btn">
+        <image src="/icon/scan.png"></image>
+        <text>扫一扫</text>
+      </button>
+    </view>
+    
+    <view class="modal-content">
+      <view class="modal-input" wx:if="{{showInputSNDialog}}">
+        <input type="text" class="modal-input" placeholder="请输入序列号" bindinput="inputDeviceSN" bindconfirm="confirmDeviceSN"/>
+        <button class="btn-confirm" catchtap="confirmDeviceSN">确认</button>
+      </view>
+    </view>
 </view>

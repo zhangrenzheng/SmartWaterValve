@@ -1,0 +1,15 @@
+/* pages/shareDevice/shareDevice.wxss */
+.content {
+    flex: 1;
+}
+.item {
+    display: flex;
+    align-items: center;
+    height: 100rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    border-bottom: 1rpx solid #afafaf;
+}
+.item-text {
+    flex: 1;
+}

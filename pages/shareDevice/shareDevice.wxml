@@ -1,0 +1,17 @@
+<!--pages/shareDevice/shareDevice.wxml-->
+<view class="content">
+    <view class="item" bindtap="">
+        <image src="/icon/icon-next.png" class="item-img"/>
+        <text class="item-text">共享给手机号</text>
+    </view>
+    <view class="item">
+        <view class="item-row" bidntap="">
+            <text class="item-text">仅可访问</text>
+            <switch></switch>
+        </view>
+        <view class="item-row" bidntap="">
+            <text class="item-text">可访问可控制</text>
+            <switch></switch>
+        </view>
+    </view> 
+</view>

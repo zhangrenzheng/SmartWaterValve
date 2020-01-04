@@ -1,15 +1,24 @@
 <!-- 登录页面 -->
-<view class="container-login">
-<!-- 用户登录 -->
-    <view class="userinfo">
-        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo"
-        bindgetuserinfo="getUserInfo" type="primary">微信登陆</button>
-        <block wx:else>
-            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"
-            mode="cover"></image>
-            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-            <button open-type="share" type="default">分享</button>
-            <button bindtap="loginOut" type="warn">退出登录</button>
-        </block>
-    </view>
+<view class="userinfo">
+    <!-- 用户未登录，仅展示登录按钮 -->
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo"
+    bindgetuserinfo="getUserInfo" type="primary" class="userinfo-btn">微信登陆</button>
+    <!-- <block wx:else> -->
+    <!-- 用户已经登录，展示对应功能 -->
+    <block wx:else>
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"
+        mode="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <!-- <view class="userinfo-item">
+            <button open-type="share" class="userinfo-btn">小程序分享</button>
+        </view> -->
+        <view class="userinfo-item" bindtap="toShareDevice">
+          <view class="userinfo-text">设备分享</view>
+        </view>
+        <view class="userinfo-item" bindtap="logout">
+            <!-- <button bindtap="loginOut" type="warn" class="userinfo-btn">退出登录</button> -->
+            <text class="userinfo-logout">退出登录</text>
+        </view>
+    </block>
+    <!-- </block> -->
 </view>

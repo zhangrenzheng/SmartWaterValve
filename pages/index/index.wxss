@@ -162,6 +162,9 @@ page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
 }
 
 .userinfo-avatar {
@@ -178,4 +181,95 @@ page {
 .usermotto {
   margin-top: 200px;
 }
-
+.userinfo-item {
+  align-items: center;
+  height: 100rpx;
+  width: 100%;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  border-bottom: 1rpx solid #afafaf;
+}
+.userinfo-text {
+  /* align-items: center; */
+  text-align: center;
+  line-height: 100rpx;
+  size: 20rpx;
+}
+.userinfo-logout {
+  text-align: center;
+  color: red;
+  line-height: 100rpx;
+  size: 20rpx;
+  display: block;
+}
+.userinfo-btn {
+  background-color: #afafaf;
+  width: 100%;
+  line-height: 100rpx;
+}
+/* 弹框样式 */
+.modal-mask{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  /* 透明度 */
+  overflow: hidden;
+  /*溢出处理*/
+  z-index: 9000;
+  /* 深度方向堆叠顺序 */
+  color: #fff;
+}
+.modal-dialog {
+  width: 540rpx;
+  overflow: hidden;
+  position: fixed;
+  /* 距离顶部400rpx，左边105rpx，不知道百分比在此处的计算情况 */
+  top: 400rpx;
+  left: 105rpx;
+  z-index: 9999;
+  background: #fff;
+  border-radius: 30rpx;
+}
+.modal-title {
+  margin: 20rpx 0;
+  text-align: center;
+  color: #000;
+  font-size: large;
+  font-weight: bold;
+}
+.modal-content {
+  display: flex;
+  margin: 10rpx;
+}
+.modal-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.modal-btn > image {
+  height: 80rpx;
+  width: 80rpx;
+  margin: auto;
+}
+.modal-btn > text {
+  font-weight: lighter;
+  /* color:  */
+}
+.modal-input {
+  flex: 1;
+}
+.modal-input > input {
+  outline: none;
+  border: 1rpx solid #ccc;
+  border-radius: 3rpx;
+  padding: 7rpx 0;
+  width: 100%;
+  font-size: 30rpx;
+}
+.modal-input > button {
+  
+}
