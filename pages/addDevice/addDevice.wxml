@@ -13,5 +13,5 @@
 
 <modal wx:if="{{addDeviceDialogVisable}}" title="请输入设备序列号" 
     confirm-text="添加" cancel-text="取消" bindcancel="cancelAddDevice" bindconfirm="confirmAddDevice">
-    <input type='number'placeholder="请输入设备序列号" bindinput="inputDeviceId" focus/>
+    <input type='number' placeholder="请输入设备序列号" bindinput="inputDeviceId" focus/>
 </modal>

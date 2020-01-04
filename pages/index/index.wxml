@@ -10,6 +10,9 @@
 
         <view class="device-title">
           <text>设备</text>
+          <text wx:if="{{!openID}}"> (</text>
+          <text wx:if="{{!openID}}" style="color: red;">请登录</text>
+          <text wx:if="{{!openID}}">)</text>
         </view>
 
         <view class="device-overview" bindtap="displayAllDevice">
