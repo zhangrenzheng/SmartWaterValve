@@ -1,0 +1,26 @@
+page {
+    display: flex;
+    flex-direction: column;
+    background: #f7f4f4;
+    /* page 文字颜色 */
+    color: #003333;
+    height: 100%;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    height: 150rpx;
+    margin-top: 40rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    border-radius: 30rpx;
+}
+
+.item > image {
+    margin-left: 40rpx;
+}
+
+.item > text {
+    margin-left: 20rpx;
+}

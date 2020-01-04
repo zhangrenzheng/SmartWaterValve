@@ -1,0 +1,17 @@
+<!--pages/addDevice/addDevice.wxml-->
+<view class="item" style="background: #a5dbff;" bindtap="addDeviceByInput">
+    <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-input.png"></image>
+    <text>序列号添加</text>
+</view>
+
+
+<view class="item" style="background: #409e55;" bindtap="addDeviceByScanCode">
+    <image style="width: 40rpx; height: 40rpx;" src="../../icon/icon-qrcode.png"></image>
+    <text>扫描二维码添加</text>
+</view>
+
+
+<modal wx:if="{{addDeviceDialogVisable}}" title="请输入设备序列号" 
+    confirm-text="添加" cancel-text="取消" bindcancel="cancelAddDevice" bindconfirm="confirmAddDevice">
+    <input type='number'placeholder="请输入设备序列号" bindinput="inputDeviceId" focus/>
+</modal>

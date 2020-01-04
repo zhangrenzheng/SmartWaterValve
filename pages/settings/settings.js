@@ -493,9 +493,18 @@ Page({
   /* 跳转到日志页面 */
   jumpToLog: function (e) {
     var device_id = this.data.device_id;
-
+  
     wx.navigateTo({
       url: "/pages/log/log?device_id=" + encodeURIComponent(device_id),
+    })
+  },
+
+  /* 跳转到设备共享页面 */
+  jumpToShareDevice: function (e) {
+    var device_id = this.data.device_id;
+
+    wx.navigateTo({
+      url: "/pages/shareDevice/shareDevice?device_id=" + encodeURIComponent(device_id),
     })
   },
 

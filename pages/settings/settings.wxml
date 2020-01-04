@@ -22,7 +22,7 @@
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
 
-  <view class="settings-item">
+  <view class="settings-item" bindtap="jumpToShareDevice">
     <view class="settings-item-name">设备共享</view>
     <image style="width: 17rpx; height: 34rpx;" src="../../icon/icon-next.png"></image>
   </view>
