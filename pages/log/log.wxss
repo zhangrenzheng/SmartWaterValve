@@ -1,0 +1,40 @@
+page {
+    display: flex;
+    flex-direction: column;
+    background: #f7f4f4;
+    height: 100%; 
+}
+
+
+page > swiper {
+    height: 100%;
+}
+
+.date-block {
+    background: #fff;
+    margin-top: 30rpx;
+}
+  
+.date-block-date {
+    display: flex;
+    align-items: center;
+    font-size: 25rpx;
+    color: hsl(0, 0%, 33%);
+    height: 50rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+}
+
+.date-block-item {
+    display: flex;
+    align-items: center;
+    height: 100rpx;
+    margin-left: 40rpx;
+    margin-right: 40rpx;
+    border-top: 1rpx solid #afafaf;
+}
+
+.date-block-item-log {
+    margin-left: 25rpx;
+    flex: 1;
+}

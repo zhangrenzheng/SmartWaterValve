@@ -23,15 +23,18 @@ Page({
     deviceInfo: {
 
     },
+    deviceLog: [],
 
     // 弹窗显示控制
     openControlDialogVisible: false,
     modifyPositionDialogVisible: false,
     controlTypeDialogVisible: false,
     modifyAccuracyDialogVisible: false,
+    getAccessControlDialogVisible: false,
     
     /* 阀门开关量 2: 打开 1: 关闭 0: 停止 */
     openControl: '',
+    openControlToDisplay: '',
 
     /* 阀门开度 */
     position: '',
@@ -39,10 +42,14 @@ Page({
 
     /* 控制方式 1：高字节 2：低字节 */
     controlType: '',
+    controlTypeToDisplay: '',
 
     /* 控制精度 */
     accuracy: '',
     accuracyToDisplay: '',
+
+    /* 输入的访问控制密码 */
+    controlPassword: '',
 
     /* 保存返回结果 */
     result: ''
@@ -90,6 +97,15 @@ Page({
         })
       }
     });
+
+    wx.request({
+      url: 'https://swv.wuwz.net/DeviceHistoryInfo?device_id=' + encodeURIComponent(device_id),
+      success: function (res) {
+        that.setData({
+          deviceLog: res.data
+        })
+      }
+    })
   },
 
   /**
@@ -158,7 +174,7 @@ Page({
   showModifyPositionDialog: function () {
     this.setData({
       modifyPositionDialogVisible: true,
-      positionToDisplay: this.data.deviceInfo.position
+      positionToDisplay: this.data.position
     })
   },
 
@@ -182,12 +198,12 @@ Page({
 
   requestModifyPosition: function () {
     var that = this;
-    var position = this.data.position;
+    var positionToDisplay = this.data.positionToDisplay;
     var device_id = this.data.device_id;
     var openID = this.data.openID;
 
     wx.request({
-      url: 'https://swv.wuwz.net/OpenDegreeCtrl?degree=' + encodeURIComponent(position)
+      url: 'https://swv.wuwz.net/OpenDegreeCtrl?degree=' + encodeURIComponent(positionToDisplay)
         + '&openID=' + encodeURIComponent(openID)
         + '&device_id=' + encodeURIComponent(device_id),
 
@@ -197,9 +213,19 @@ Page({
         })
 
         if (that.data.result == 1)
+        {
           console.log("操作成功")
+          that.setData({
+            position: that.data.positionToDisplay,
+            positionToDisplay: ''
+          });
+        }
         if (that.data.result == 2)
+        {
           console.log("无权限")
+          that.hideModifyPositionDialog();
+          that.showGetAccessControlDialog();
+        }
         if (that.data.result == 0)
           console.log("操作失败")
       }
@@ -209,10 +235,6 @@ Page({
   confirmModifyPosition: function () {
     if (!this.data.positionToDisplay) 
       return;
-    this.setData({
-      position: this.data.positionToDisplay,
-      positionToDisplay: ''
-    });
     this.requestModifyPosition();
     this.hideModifyPositionDialog();
   },
@@ -221,7 +243,8 @@ Page({
   /* 修改阀门开关量 相关函数 */
   showOpenControlDialog: function () {
     this.setData({
-      openControlDialogVisible: true
+      openControlDialogVisible: true,
+      openControlToDisplay: this.data.openControl
     })
   },
 
@@ -233,14 +256,14 @@ Page({
 
   requestOpenControl: function () {
     var that = this;
-    var openControl = this.data.openControl;
+    var openControlToDisplay = this.data.openControlToDisplay;
     var device_id = this.data.device_id;
     var openID = this.data.openID;
 
     wx.request({
       url: 'https://swv.wuwz.net/OpenDeviceCtrl?openID=' + encodeURIComponent(openID)
         + '&device_id=' + encodeURIComponent(device_id)
-        + '&type=' + encodeURIComponent(openControl),
+        + '&type=' + encodeURIComponent(openControlToDisplay),
 
       success: function (res) {
         that.setData({
@@ -248,9 +271,20 @@ Page({
         })
 
         if (that.data.result == 1)
-          console.log("操作成功")
+        {
+          console.log("操作成功");
+          that.setData({
+            openControl: that.data.openControlToDisplay,
+            openControlToDisplay: ''
+          })
+        }
         if (that.data.result == 2)
-          console.log("无权限")
+        {
+          console.log("无权限");
+          that.hideOpenControlDialog();
+          that.showGetAccessControlDialog();
+        }
+          
         if (that.data.result == 0)
           console.log("操作失败")
       }
@@ -259,7 +293,7 @@ Page({
 
   openValve: function () {
     this.setData({
-      openControl: 2
+      openControlToDisplay: 2
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();
@@ -273,7 +307,7 @@ Page({
 
   closeValve: function () {
     this.setData({
-      openControl: 1
+      openControlToDisplay: 1
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();
@@ -287,7 +321,7 @@ Page({
 
   stopValve: function () {
     this.setData({
-      openControl: 0
+      openControlToDisplay: 0
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();
@@ -306,7 +340,8 @@ Page({
   /* 修改控制方式弹窗 相关函数 */
   showControlTypeDialog: function () {
     this.setData({
-      controlTypeDialogVisible: true
+      controlTypeDialogVisible: true,
+      controlTypeToDisplay: this.data.controlType
     })
   },
 
@@ -318,12 +353,12 @@ Page({
 
   requestControlType: function () {
     var that = this;
-    var controlType = this.data.controlType;
+    var controlTypeToDisplay = this.data.controlTypeToDisplay;
     var device_id = this.data.device_id;
     var openID = this.data.openID;
 
     wx.request({
-      url: 'https://swv.wuwz.net/setCtrlType?type=' + encodeURIComponent(controlType)
+      url: 'https://swv.wuwz.net/setCtrlType?type=' + encodeURIComponent(controlTypeToDisplay)
         + '&openID=' + encodeURIComponent(openID)
         + '&device_id=' + encodeURIComponent(device_id),
 
@@ -333,9 +368,19 @@ Page({
         })
 
         if (that.data.result == 1)
-          console.log("操作成功")
+        {
+          console.log("操作成功");
+          that.setData({
+            controlType: that.data.controlTypeToDisplay,
+            controlTypeToDisplay: ''
+          })
+        }
         if (that.data.result == 2)
-          console.log("无权限")
+        {
+          console.log("无权限");
+          that.hideControlTypeDialog();
+          that.showGetAccessControlDialog();
+        }
         if (that.data.result == 0)
           console.log("操作失败")
       }
@@ -344,7 +389,7 @@ Page({
 
   highByte: function () {
     this.setData({
-      controlType: 1
+      controlTypeToDisplay: 1
     });
     // console.log(this.data.openControl);
     this.requestControlType();
@@ -358,7 +403,7 @@ Page({
 
   lowByte: function () {
     this.setData({
-      controlType: 2
+      controlTypeToDisplay: 2
     });
     // console.log(this.data.openControl);
     this.requestControlType();
@@ -374,7 +419,7 @@ Page({
   showModifyAccuracyDialog: function () {
     this.setData({
       modifyAccuracyDialogVisible: true,
-      accuracyToDisplay: this.data.deviceInfo.accuracy
+      accuracyToDisplay: this.data.accuracy
     })
   },
 
@@ -398,12 +443,81 @@ Page({
 
   requestModifyAccuracy: function () {
     var that = this;
-    var accuracy = this.data.accuracy;
+    var accuracyToDisplay = this.data.accuracyToDisplay;
     var device_id = this.data.device_id;
     var openID = this.data.openID;
 
     wx.request({
-      url: 'https://swv.wuwz.net/setAccuracy?accuracy=' + encodeURIComponent(accuracy)
+      url: 'https://swv.wuwz.net/setAccuracy?accuracy=' + encodeURIComponent(accuracyToDisplay)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+        {
+          console.log("操作成功");
+          that.setData({
+            accuracy: that.data.accuracyToDisplay,
+            accuracyToDisplay: ''
+          })
+        }
+        if (that.data.result == 2)
+        {
+          console.log("无权限");
+          that.hideModifyAccuracyDialog();
+          that.showGetAccessControlDialog();
+        }
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
+    })
+  },
+
+  confirmModifyAccuracy: function () {
+    if (!this.data.accuracyToDisplay)
+      return;
+    this.requestModifyAccuracy();
+    this.hideModifyAccuracyDialog();
+  },
+
+  /* 获取用户控制权限弹出框 相关函数 */
+  showGetAccessControlDialog: function () {
+    this.setData({
+      getAccessControlDialogVisible: true,
+      controlPassword: "",
+    })
+  },
+
+  hideGetAccessControlDialog: function () {
+    this.setData({
+      getAccessControlDialogVisible: false
+    })
+  },
+
+  inputControlPassword: function (e) {
+    this.setData({
+      controlPassword: e.detail.value
+    })
+  },
+
+  clearControlPassword: function () {
+    this.setData({
+      controlPassword: ""
+    })
+  },
+
+  requestGetAccessControl: function () {
+    var that = this;
+    var controlPassword = this.data.controlPassword;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/getAccessCtrl?cpassword=' + encodeURIComponent(controlPassword)
         + '&device_id=' + encodeURIComponent(device_id)
         + '&openID=' + encodeURIComponent(openID),
 
@@ -414,22 +528,16 @@ Page({
 
         if (that.data.result == 1)
           console.log("操作成功")
-        if (that.data.result == 2)
-          console.log("无权限")
         if (that.data.result == 0)
           console.log("操作失败")
       }
     })
   },
 
-  confirmModifyAccuracy: function () {
-    if (!this.data.accuracyToDisplay)
-      return;
-    this.setData({
-      accuracy: this.data.accuracyToDisplay,
-      accuracyToDisplay: ''
-    });
-    this.requestModifyAccuracy();
-    this.hideModifyAccuracyDialog();
-  },
+  confirmGetAccessControl: function () {
+    if (!this.data.controlPassword)
+      return
+    this.requestGetAccessControl()
+    this.hideGetAccessControlDialog()
+  }
 })

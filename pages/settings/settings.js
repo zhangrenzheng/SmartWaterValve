@@ -13,13 +13,20 @@ Page({
     showNameToDisplay: "",
     remark: "",
     remarkToDisplay: "",
+    accessCtrl: "",
+    accessControlPassword: "",
+    accessControlPasswordToUpdate: "",
     team: "",
     teamName: "",
+    controlPassword: '',
 
     /* 弹窗显示控制 */
     modifyDeviceNameDialogVisible: false,
     deleteDeviceDialogVisible: false,
     deviceGroupingDialogVisible: false,
+    enableAccessDialogVisible: false,
+    updateAccessCtrlPasswordDialogVisible: false,
+    getAccessControlDialogVisible: false,
 
     result: null
   },
@@ -33,7 +40,8 @@ Page({
       show_name: decodeURIComponent(options.show_name),
       remark: decodeURIComponent(options.remark),
       team: decodeURIComponent(options.team),
-      teamName: decodeURIComponent(options.teamName)
+      teamName: decodeURIComponent(options.teamName),
+      accessCtrl: decodeURIComponent(options.accessCtrl)
     })
   },
 
@@ -86,12 +94,6 @@ Page({
 
   },
 
-  checkResult: function () {
-    console.log("操作成功")
-  },
-
-
-
   /* 修改设备名称弹出框 相关函数 */
   showModifyDeviceNameDialog: function () {
     this.setData({
@@ -133,14 +135,14 @@ Page({
 
   requestModifyDeviceName: function () {
     var that = this;
-    var show_name = this.data.show_name;
-    var remark = this.data.remark;
+    var showNameToDisplay = this.data.showNameToDisplay;
+    var remarkToDisplay = this.data.remarkToDisplay;
     var device_id = this.data.device_id;
     var openID = this.data.openID;
 
     wx.request({
-      url: 'https://swv.wuwz.net/UpdateDeviceName?remark=' + encodeURIComponent(remark) +
-        '&show_name=' + encodeURIComponent(show_name)
+      url: 'https://swv.wuwz.net/UpdateDeviceName?remark=' + encodeURIComponent(remarkToDisplay) +
+        '&show_name=' + encodeURIComponent(showNameToDisplay)
         + '&device_id=' + encodeURIComponent(device_id)
         + '&openID=' + encodeURIComponent(openID),
 
@@ -150,9 +152,21 @@ Page({
         })
 
         if (that.data.result == 1)
-          that.checkResult()
+        {
+          console.log("操作成功");
+          that.setData({
+            show_name: that.data.showNameToDisplay,
+            remark: that.data.remarkToDisplay,
+            showNameToDisplay: "",
+            remarkToDisplay: ""
+          })
+        }
         if (that.data.result == 2)
-          console.log("无权限")
+        {
+          console.log("无权限");
+          that.hideModifyDeviceNameDialog();
+          that.showGetAccessControlDialog();
+        }
         if (that.data.result == 0)
           console.log("操作失败")
       }
@@ -162,12 +176,6 @@ Page({
   confirmModifyDeviceName: function () {
     if (!this.data.showNameToDisplay || !this.data.remarkToDisplay)
       return
-    this.setData({
-      show_name: this.data.showNameToDisplay,
-      remark: this.data.remarkToDisplay,
-      showNameToDisplay: "",
-      remarkToDisplay: ""
-    })
     this.requestModifyDeviceName()
     this.hideModifyDeviceNameDialog()
   },
@@ -200,9 +208,9 @@ Page({
         })
 
         if (that.data.result == 1)
-          that.checkResult()
-        if (that.data.result == 2)
-          console.log("无权限")
+        {
+          console.log("操作成功")
+        }
         if (that.data.result == 0)
           console.log("操作失败")
       }
@@ -217,6 +225,132 @@ Page({
     })
   },
 
+  /* 启用访问权限弹出框 相关函数 */
+  showEnableAccessDialog: function () {
+    this.setData({
+      enableAccessDialogVisible: true,
+    })
+  },
+
+  hideEnableAccessDialog: function () {
+    this.setData({
+      enableAccessDialogVisible: false
+    })
+  },
+
+  inputAccessControlPassword: function (e) {
+    this.setData({
+      accessControlPassword: e.detail.value
+    })
+  },
+
+  clearAccessControlPassword: function () {
+    this.setData({
+      accessControlPassword: ""
+    })
+  },
+
+  requestEnableAccess: function () {
+    var that = this;
+    var accessControlPassword = this.data.accessControlPassword;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/startAccessCtrl?apassword=' + encodeURIComponent(accessControlPassword)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+        {
+          {
+            console.log("操作成功")
+          }
+          that.setData({
+            accessCtrl: 1
+          })
+        }
+        if (that.data.result == 2)
+          console.log("此设备已有管理员")
+        if (that.data.result == 3)
+          console.log("未找到设备或用户")
+        if (that.data.result == 0)
+          console.log("密码错误")
+      }
+    })
+  },
+
+  confirmEnableAccess: function () {
+    if (!this.data.accessControlPassword)
+      return
+    this.requestEnableAccess()
+    this.hideEnableAccessDialog()
+  },
+
+  /* 修改设备控制密码弹出框 相关函数 */
+  showUpdateAccessCtrlPasswordDialog: function () {
+    this.setData({
+      updateAccessCtrlPasswordDialogVisible: true,
+    })
+  },
+
+  hideUpdateAccessCtrlPasswordDialog: function () {
+    this.setData({
+      updateAccessCtrlPasswordDialogVisible: false
+    })
+  },
+
+  inputAccessControlPasswordToUpdate: function (e) {
+    this.setData({
+      accessControlPasswordToUpdate: e.detail.value
+    })
+  },
+
+  clearAccessControlPasswordToUpdate: function () {
+    this.setData({
+      accessControlPasswordToUpdate: ""
+    })
+  },
+
+  requestUpdateAccessCtrlPassword: function () {
+    var that = this;
+    var accessControlPasswordToUpdate = this.data.accessControlPasswordToUpdate;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/updateAccessCtrlPassword?cPassword=' + encodeURIComponent(accessControlPasswordToUpdate)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+        {
+          that.checkResult()
+        }
+        if (that.data.result == 2)
+          console.log("无权限")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
+    })
+  },
+
+  confirmUpdateAccessCtrlPassword: function () {
+    if (!this.data.accessControlPasswordToUpdate)
+      return
+    this.requestUpdateAccessCtrlPassword()
+    this.hideUpdateAccessCtrlPasswordDialog()
+  },
 
   /* 设备分组弹出框 相关函数 */
   showDeviceGroupingDialog: function () {
@@ -265,7 +399,6 @@ Page({
     var openID = this.data.openID;
 
     wx.request({
-      // https://swv.wuwz.net/setDeviceTeam?openID=100000000151&device_id=100001&team=1&team_name=highTeam
       url: 'https://swv.wuwz.net/setDeviceTeam?openID=' + encodeURIComponent(openID)
         + '&device_id=' + encodeURIComponent(device_id)
         + '&team=' + encodeURIComponent(team)
@@ -277,7 +410,9 @@ Page({
         })
 
         if (that.data.result == 1)
-          that.checkResult()
+        {
+          console.log("操作成功")
+        }
         if (that.data.result == 2)
           console.log("无权限")
         if (that.data.result == 0)
@@ -297,5 +432,79 @@ Page({
     })
     this.requestDeviceGrouping()
     this.hideDeviceGroupingDialog()
+  },
+
+  /* 获取用户控制权限弹出框 相关函数 */
+  showGetAccessControlDialog: function () {
+    this.setData({
+      getAccessControlDialogVisible: true,
+    })
+  },
+
+  hideGetAccessControlDialog: function () {
+    this.setData({
+      getAccessControlDialogVisible: false
+    })
+  },
+
+  inputControlPassword: function (e) {
+    this.setData({
+      controlPassword: e.detail.value
+    })
+  },
+
+  clearControlPassword: function () {
+    this.setData({
+      controlPassword: ""
+    })
+  },
+
+  requestGetAccessControl: function () {
+    var that = this;
+    var controlPassword = this.data.controlPassword;
+    var device_id = this.data.device_id;
+    var openID = this.data.openID;
+
+    wx.request({
+      url: 'https://swv.wuwz.net/getAccessCtrl?cpassword=' + encodeURIComponent(controlPassword)
+        + '&device_id=' + encodeURIComponent(device_id)
+        + '&openID=' + encodeURIComponent(openID),
+
+      success: function (res) {
+        that.setData({
+          result: res.data.result
+        })
+
+        if (that.data.result == 1)
+          console.log("操作成功")
+        if (that.data.result == 0)
+          console.log("操作失败")
+      }
+    })
+  },
+
+  confirmGetAccessControl: function () {
+    if (!this.data.controlPassword)
+      return
+    this.requestGetAccessControl()
+    this.hideGetAccessControlDialog()
+  },
+
+  /* 跳转到日志页面 */
+  jumpToLog: function (e) {
+    var device_id = this.data.device_id;
+
+    wx.navigateTo({
+      url: "/pages/log/log?device_id=" + encodeURIComponent(device_id),
+    })
+  },
+
+  /* 跳转到权限管理页面 */
+  jumpToAuthorityManagement: function (e) {
+    var device_id = this.data.device_id;
+
+    wx.navigateTo({
+      url: "/pages/authorityManagement/authorityManagement?device_id=" + encodeURIComponent(device_id),
+    })
   }
 })

@@ -16,11 +16,11 @@
 - [x] URL/delDevice  
 	删除设备  
 
-- [ ] URL/startAccessCtrl  
+- [x] URL/startAccessCtrl  
 	获取管理员身份  
 	制作输入管理员密码弹出框  
 
-- [ ] URL/getAccessCtrl  
+- [x] URL/getAccessCtrl  
 	获取用户控制权限  
 	检测用户权限，如果没有权限弹出输入密码框以获取权限  
 
@@ -48,16 +48,16 @@
 - [x] URL/UpdateDeviceName  
 	修改设备名称和备注  
 
-- [ ] URL/updateAccessCtrlPassword  
+- [x] URL/updateAccessCtrlPassword  
 	修改控制密码  
 
-- [ ] URL/DeviceHistoryInfo  
+- [x] URL/DeviceHistoryInfo  
         获取某设备相关的运行历史
 	
 - [ ] URL/addAccessCtrlUsers  
         为某用户授权某设备的权限  
 	
-- [ ] URL/getAccessCtrlUsers  
+- [x] URL/getAccessCtrlUsers  
         获取拥有某设备的账户列表及详情  
 	
 - [ ] URL/delAccessCtrlUsers  

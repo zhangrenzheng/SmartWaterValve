@@ -1,0 +1,16 @@
+<!--pages/log/log.wxml-->
+<swiper>
+    <swiper-item catchtouchmove='catchTouchMove'>
+        <scroll-view style="height: 100%;" scroll-y>
+
+            <view class="date-block" wx:for="{{deviceLog}}" wx:for-index="dateIndex" wx:key="dateIndex">
+                <view class="date-block-date">{{dateIndex}}</view>
+                <view class="date-block-item" wx:for="{{deviceLog[dateIndex]}}" wx:for-item="logItem" wx:for-index="logIndex" wx:key="logIndex">
+                    <view class="date-block-item-time">{{logItem.time}}</view>
+                    <view class="date-block-item-log">{{logItem.log}}</view>
+                </view>
+            </view>
+
+        </scroll-view>
+    </swiper-item>
+</swiper>

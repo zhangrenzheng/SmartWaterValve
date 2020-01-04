@@ -1,0 +1,28 @@
+<!-- <text>{{util.sub(accessCtrlUsers[0].u_openid)}}</text> -->
+
+
+<view class="container">
+
+    <view class="item" wx:for="{{accessCtrlUsers}}" wx:for-index="index" wx:key="index">
+        <view class="item-user">{{util.sub(item.u_openid)}}</view>
+        <view class="item-authority">访问</view>
+        <view wx:if="{{item.a_access == 1 || item.p_access == 1}}" class="item-authority">控制</view>
+        <view class="item-method">
+            <view wx:if="{{item.a_access == 1 && item.p_access == 0}}" class="item-method-top">来自授权</view>
+            <view wx:if="{{item.a_access == 0 && item.p_access == 1}}" class="item-method-top">来自密码</view>
+            <view wx:if="{{item.a_access == 1 && item.p_access == 1}}" class="item-method-top">管理员</view>
+            <view wx:if="{{item.a_access == 1 && item.p_access == 0}}" class="item-method-second">授权者: {{util.sub(item.a_openid)}}</view>
+        </view>
+        <image style="margin-left: 20rpx; width: 40rpx; height: 40rpx;" src="../../icon/icon-delete.png"></image>
+    </view>
+
+</view>
+
+
+<wxs module="util">
+    var sub = function(val) {
+        return val.substring(val.length - 5)
+    }
+    module.exports.sub = sub;
+</wxs>
+
