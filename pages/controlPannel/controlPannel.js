@@ -254,6 +254,18 @@ Page({
             position: that.data.positionToDisplay,
             positionToDisplay: ''
           });
+          if(positionToDisplay != 0 && that.data.openControl == 1)
+          {
+            that.setData({
+              openControl: 2
+            })
+          }
+          if(positionToDisplay == 0 && that.data.openControl == 2)
+          {
+            that.setData({
+              openControl: 1
+            })
+          }
         }
         if (that.data.result == 2)
         {
@@ -267,6 +279,15 @@ Page({
           wx.showToast({
             title: '操作失败',
             icon: 'success',
+            duration: 2000
+          })
+        }
+        if (that.data.result == 3)
+        {
+          console.log("阀门处于关闭状态")
+          wx.showToast({
+            title: '阀门为关闭状态',
+            icon: 'none',
             duration: 2000
           })
         }
@@ -329,7 +350,8 @@ Page({
           console.log("操作成功")
           that.setData({
             openControl: that.data.openControlToDisplay,
-            openControlToDisplay: ''
+            openControlToDisplay: '',
+            position: that.data.positionToDisplay
           })
         }
         if (that.data.result == 2)
@@ -354,7 +376,8 @@ Page({
   openValve: function () {
     this.setData({
       openControlToDisplay: 2,
-      titleToDisplay: '打开成功'
+      titleToDisplay: '打开成功',
+      positionToDisplay: 100
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();
@@ -364,7 +387,8 @@ Page({
   closeValve: function () {
     this.setData({
       openControlToDisplay: 1,
-      titleToDisplay: '关闭成功'
+      titleToDisplay: '关闭成功',
+      positionToDisplay: 0
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();
@@ -374,7 +398,8 @@ Page({
   stopValve: function () {
     this.setData({
       openControlToDisplay: 0,
-      titleToDisplay: '停止成功'
+      titleToDisplay: '停止成功',
+      positionToDisplay: this.data.position
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();

@@ -579,6 +579,7 @@ Page({
             icon: 'none',
             duration: 2000
           });
+          that.clearControlPassword();
         }
       }
     })
