@@ -1,7 +1,7 @@
 <view class="content">
   <swiper current="{{item}}" bindchange="changeTab">
 
-    <swiper-item catchtouchmove='catchTouchMove'>
+    <swiper-item >
       <view class="container">
 
         <view class="add-device" bindtap="jumpToAddDevice"> 
@@ -28,29 +28,32 @@
                   <view class="device-list-item" wx:for="{{deviceList}}" wx:key="device_id"  id="{{index}}" bindtap="jumpToControlPanel">
                     <image style="width: 50rpx; height: 100rpx" src="smartvalue.png"></image>
 
-                    <view class="device-list-item-info" id="{{index}}">
+                    <view class="device-list-item-info" style="width: 200rpx;" id="{{index}}">
                       <view class="device-list-item-name" id="{{index}}">{{item.show_name}}</view>
                       <view class="device-list-item-rmkinfo" id="{{index}}">{{item.remark}}</view>
                     </view>
 
                     <view class="device-warning" id="{{index}}">
-                      <image src="../../icon/icon-warning.png" id="{{index}}"></image>
+                      <image wx:if="{{item.error == 0}}" src="../../icon/icon-plain.png" id="{{index}}"></image>
+                      <image wx:if="{{item.error == 1}}" src="../../icon/icon-warning.png" id="{{index}}"></image>
                       <view class="device-warning-text" id="{{index}}">警告</view>
                     </view>
 
                     <view class="device-warning" id="{{index}}">
-                      <image src="../../icon/icon-warning.png" id="{{index}}"></image>
+                      <image wx:if="{{item.open_ctrl == 0}}" src="../../icon/icon-plain.png" id="{{index}}"></image>
+                      <image wx:else src="../../icon/icon-working.png" id="{{index}}"></image>
                       <view class="device-warning-text" id="{{index}}">运行</view>
                     </view>
 
                     <view class="device-warning" id="{{index}}">
-                      <image src="../../icon/icon-warning.png" id="{{index}}"></image>
+                      <image wx:if="{{item.state == 0}}" src="../../icon/icon-plain.png" id="{{index}}"></image>
+                      <image wx:else src="../../icon/icon-working.png" id="{{index}}"></image>
                       <view class="device-warning-text" id="{{index}}">链接</view>
                     </view>
 
                     <view class="device-valve-position" id="{{index}}">{{item.position}}%</view>
 
-                    <image style="width: 50rpx; height: 50rpx; margin-left: 20rpx; margin-right: 40rpx;" 
+                    <image style="width: 50rpx; height: 50rpx; margin-left: 10rpx; margin-right: 40rpx;" 
                       src="../../icon/icon-more.png" id="{{index}}" catchtap="jumpToSettings"> 
                     </image>
                   </view>

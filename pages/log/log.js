@@ -14,7 +14,6 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      openID: app.globalData.openID,
       device_id: decodeURIComponent(options.device_id)
     })
   },
@@ -63,8 +62,23 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function () {    
+    var that = this;
+    var device_id = this.data.device_id;
+    let dateArrayTemp = [
+      ""
+    ];
 
+    wx.request({
+      url: 'https://swv.wuwz.net/DeviceHistoryInfo?device_id=' + encodeURIComponent(device_id),
+      success: function (res) {
+        that.setData({
+          deviceLog: res.data
+        })
+      }
+    })
+
+    wx.stopPullDownRefresh();
   },
 
   /**

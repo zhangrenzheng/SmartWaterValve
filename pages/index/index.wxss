@@ -90,7 +90,7 @@ page {
 }
 
 .device-list-item-info {
-  flex: 1;
+  /* flex: 1; */
   margin-left: 20rpx;
 }
 
@@ -106,12 +106,12 @@ page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 20rpx;
+  margin-left: 15rpx;
 }
 
 .device-warning > image {
-  width: 35rpx;
-  height: 35rpx;
+  width: 40rpx;
+  height: 40rpx;
   margin: 10rpx auto 10rpx;
 }
 
@@ -122,6 +122,9 @@ page {
 
 .device-valve-position{
   margin-left: 20rpx;
+  text-align: right;
+  /* width: 40rpx; */
+  flex: 1;
 }
 
 ::-webkit-scrollbar {

@@ -65,7 +65,19 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    var that = this;
+    var device_id = this.data.device_id;
 
+    wx.request({
+      url: 'https://swv.wuwz.net/getAccessCtrlUsers?device_id=' + encodeURIComponent(device_id),
+      success: function (res) {
+        that.setData({
+          accessCtrlUsers: res.data
+        })
+      }
+    });
+
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -103,16 +115,40 @@ Page({
         if (that.data.result == 1)
         {
           console.log("删除用户访问控制权限：操作成功")
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success',
+            duration: 2000
+          })
           accessCtrlUsers.splice(index, 1);
         }
         if (that.data.result == 2)
         {
           console.log("删除用户访问控制权限：无权限，不是管理员")
+          wx.showToast({
+            title: '无权限，不是管理员',
+            icon: 'none',
+            duration: 2000
+          })
         }
         if (that.data.result == 3)
+        {
           console.log("删除用户访问控制权限：管理员权限不可删除")
+          wx.showToast({
+            title: '管理员权限不可删除',
+            icon: 'none',
+            duration: 2000
+          })
+        }
         if (that.data.result == 0)
+        {
           console.log("删除用户访问控制权限：操作失败")
+          wx.showToast({
+            title: '删除失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
 
         that.setData({
           accessCtrlUsers

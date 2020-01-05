@@ -78,7 +78,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -155,6 +155,11 @@ Page({
         if (that.data.result == 1)
         {
           console.log("操作成功");
+          wx.showToast({
+            title: '操作成功',
+            icon: 'success',
+            duration: 2000
+          });
           that.setData({
             show_name: that.data.showNameToDisplay,
             remark: that.data.remarkToDisplay,
@@ -169,7 +174,14 @@ Page({
           that.showGetAccessControlDialog();
         }
         if (that.data.result == 0)
+        {
           console.log("操作失败")
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
       }
     })
   },
@@ -213,7 +225,14 @@ Page({
           console.log("操作成功")
         }
         if (that.data.result == 0)
-          console.log("操作失败")
+        {
+          console.log("操作失败");
+          wx.showToast({
+            title: '删除设备失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
       }
     })
   },
@@ -269,19 +288,43 @@ Page({
 
         if (that.data.result == 1)
         {
-          {
-            console.log("操作成功")
-          }
+          console.log("操作成功")
+          wx.showToast({
+            title: '操作成功',
+            icon: 'success',
+            duration: 2000
+          });
           that.setData({
             accessCtrl: 1
           })
         }
         if (that.data.result == 2)
+        {
           console.log("此设备已有管理员")
+          wx.showToast({
+            title: '已有管理员',
+            icon: 'none',
+            duration: 2000
+          });
+        }
         if (that.data.result == 3)
-          console.log("未找到设备或用户")
+        {
+          console.log("未找到设备或用户");
+          wx.showToast({
+            title: '未找到设备或用户',
+            icon: 'none',
+            duration: 2000
+          });
+        }
         if (that.data.result == 0)
-          console.log("密码错误")
+        {
+          console.log("密码错误");
+          wx.showToast({
+            title: '密码错误',
+            icon: 'none',
+            duration: 2000
+          });
+        }
       }
     })
   },
@@ -336,12 +379,31 @@ Page({
 
         if (that.data.result == 1)
         {
-          that.checkResult()
+          console.log("操作成功")
+          wx.showToast({
+            title: '操作成功',
+            icon: 'succsses',
+            duration: 2000
+          });
         }
         if (that.data.result == 2)
-          console.log("无权限")
+        {
+          console.log("无权限");
+          wx.showToast({
+            title: '无权限',
+            icon: 'none',
+            duration: 2000
+          });
+        }
         if (that.data.result == 0)
-          console.log("操作失败")
+        {
+          console.log("操作失败");
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
       }
     })
   },
@@ -413,11 +475,30 @@ Page({
         if (that.data.result == 1)
         {
           console.log("操作成功")
+          wx.showToast({
+            title: '操作成功',
+            icon: 'succsses',
+            duration: 2000
+          });
         }
         if (that.data.result == 2)
-          console.log("无权限")
+        {
+          console.log("无权限");
+          wx.showToast({
+            title: '无权限',
+            icon: 'none',
+            duration: 2000
+          });
+        }
         if (that.data.result == 0)
-          console.log("操作失败")
+        {
+          console.log("操作失败");
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
       }
     })
   },
@@ -425,6 +506,11 @@ Page({
   confirmDeviceGrouping: function () {
     if (!this.data.teamToDisplay || !this.data.teamNameToDisplay)
       return
+    if (this.data.teamToDisplay < 1 || this.data.teamToDisplay > 10)
+    {
+      this.clearTeam();
+      return
+    }
     this.setData({
       team: this.data.teamToDisplay,
       teamName: this.data.teamNameToDisplay,
@@ -477,9 +563,23 @@ Page({
         })
 
         if (that.data.result == 1)
+        {
           console.log("操作成功")
+          wx.showToast({
+            title: '操作成功',
+            icon: 'succsses',
+            duration: 2000
+          });
+        }
         if (that.data.result == 0)
+        {
           console.log("操作失败")
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
       }
     })
   },

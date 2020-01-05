@@ -4,6 +4,8 @@ App({
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */
   onLaunch: function () {
+
+    var that = this;
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -18,6 +20,22 @@ App({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
+            }
+          })
+
+          wx.login({
+            success:function(res){
+              wx.request({
+                url: 'https://api.ijio.net/getOpenId.php',
+                data: {code:res.code},
+                header: {
+                  'content-type': 'application/json'
+                },
+                success: function (res) {
+                  console.log(res.data.openid)
+                  that.globalData.openID = res.data.openid
+                }
+              })
             }
           })
         }

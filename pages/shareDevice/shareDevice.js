@@ -27,7 +27,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      device_id: decodeURIComponent(options.device_id)
+      device_id: decodeURIComponent(options.device_id),
+      openID: app.globalData.openID,
     })
   },
 
@@ -178,7 +179,7 @@ Page({
     var type = that.data.type;
     
     wx.request({
-      url: 'https://swv.wuwz.net/addAccessCtrlUsers?a_openID=100000000152' + encodeURIComponent(openID)
+      url: 'https://swv.wuwz.net/addAccessCtrlUsers?a_openID=' + encodeURIComponent(openID)
         + '&phone=' + encodeURIComponent(userPhone)
         + '&device_id=' + encodeURIComponent(device_id)
         + '&type=' + encodeURIComponent(type),
@@ -191,17 +192,39 @@ Page({
         if (that.data.result == 1)
         {
           console.log("添加用户访问控制权限：操作成功")
+          wx.showToast({
+            title: '操作成功',
+            icon: 'succsses',
+            duration: 2000
+          });
         }
         if (that.data.result == 2)
         {
           console.log("添加用户访问控制权限：无权限，不是管理员")
+          wx.showToast({
+            title: '无权限',
+            icon: 'none',
+            duration: 2000
+          });
         }
         if (that.data.result == 3)
         {
           console.log("添加用户访问控制权限：无此用户")
+          wx.showToast({
+            title: '无此用户',
+            icon: 'none',
+            duration: 2000
+          });
         }
         if (that.data.result == 0)
+        {
           console.log("添加用户访问控制权限：操作失败")
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
       }
     })
   },

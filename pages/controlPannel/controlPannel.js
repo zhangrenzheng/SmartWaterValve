@@ -35,6 +35,7 @@ Page({
     /* 阀门开关量 2: 打开 1: 关闭 0: 停止 */
     openControl: '',
     openControlToDisplay: '',
+    titleToDisplay: '',
 
     /* 阀门开度 */
     position: '',
@@ -127,7 +128,35 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    var that = this;
+    var openID = this.data.openID;
+    var device_id = this.data.device_id;
 
+    /* 获取设备信息 */
+    wx.request({
+      url: 'https://swv.wuwz.net/UserDevice?openID=' + encodeURIComponent(openID)
+        + '&device_id=' + encodeURIComponent(device_id),
+      success: function (res) {
+        that.setData({
+          deviceInfo: res.data,
+          position: res.data.position,
+          openControl: res.data.open_ctrl,
+          controlType: res.data.ctrl_type,
+          accuracy: res.data.accuracy
+        })
+      }
+    });
+
+    wx.request({
+      url: 'https://swv.wuwz.net/DeviceHistoryInfo?device_id=' + encodeURIComponent(device_id),
+      success: function (res) {
+        that.setData({
+          deviceLog: res.data
+        })
+      }
+    })
+
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -216,6 +245,11 @@ Page({
         if (that.data.result == 1)
         {
           console.log("操作成功")
+          wx.showToast({
+            title: '操作成功',
+            icon: 'success',
+            duration: 2000
+          })
           that.setData({
             position: that.data.positionToDisplay,
             positionToDisplay: ''
@@ -228,14 +262,28 @@ Page({
           that.showGetAccessControlDialog();
         }
         if (that.data.result == 0)
+        {
           console.log("操作失败")
+          wx.showToast({
+            title: '操作失败',
+            icon: 'success',
+            duration: 2000
+          })
+        }
       }
     })
   },
 
   confirmModifyPosition: function () {
-    if (!this.data.positionToDisplay) 
+    if (!this.data.positionToDisplay)
+    {
       return;
+    }
+    if(!/^(?:[1-9]?\d|100)$/.test(this.data.positionToDisplay))
+    {
+      this.clearPosition();
+      return;
+    }
     this.requestModifyPosition();
     this.hideModifyPositionDialog();
   },
@@ -273,7 +321,12 @@ Page({
 
         if (that.data.result == 1)
         {
-          console.log("操作成功");
+          wx.showToast({
+            title: that.data.titleToDisplay,
+            icon: 'success',
+            duration: 1000
+          });
+          console.log("操作成功")
           that.setData({
             openControl: that.data.openControlToDisplay,
             openControlToDisplay: ''
@@ -281,56 +334,50 @@ Page({
         }
         if (that.data.result == 2)
         {
-          console.log("无权限");
           that.hideOpenControlDialog();
           that.showGetAccessControlDialog();
         }
           
         if (that.data.result == 0)
+        {
           console.log("操作失败")
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       }
     })
   },
 
   openValve: function () {
     this.setData({
-      openControlToDisplay: 2
+      openControlToDisplay: 2,
+      titleToDisplay: '打开成功'
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();
-    wx.showToast({
-      title: '已经打开',
-      icon: 'success',
-      duration: 1000
-    });
     this.hideOpenControlDialog();
   },
 
   closeValve: function () {
     this.setData({
-      openControlToDisplay: 1
+      openControlToDisplay: 1,
+      titleToDisplay: '关闭成功'
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();
-    wx.showToast({
-      title: '已经关闭',
-      icon: 'success',
-      duration: 1000
-    })
     this.hideOpenControlDialog();
   },
 
   stopValve: function () {
     this.setData({
-      openControlToDisplay: 0
+      openControlToDisplay: 0,
+      titleToDisplay: '停止成功'
     });
     // console.log(this.data.openControl);
     this.requestOpenControl();
-    wx.showToast({
-      title: '已经停止',
-      icon: 'success',
-      duration: 1000
-    })
     this.hideOpenControlDialog();
   },
 
@@ -371,6 +418,11 @@ Page({
         if (that.data.result == 1)
         {
           console.log("操作成功");
+          wx.showToast({
+            title: that.data.titleToDisplay,
+            icon: 'success',
+            duration: 1000
+          });
           that.setData({
             controlType: that.data.controlTypeToDisplay,
             controlTypeToDisplay: ''
@@ -383,36 +435,35 @@ Page({
           that.showGetAccessControlDialog();
         }
         if (that.data.result == 0)
+        {
           console.log("操作失败")
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       }
     })
   },
 
   highByte: function () {
     this.setData({
-      controlTypeToDisplay: 1
+      controlTypeToDisplay: 1,
+      titleToDisplay: '改为高字节'
     });
     // console.log(this.data.openControl);
     this.requestControlType();
-    wx.showToast({
-      title: '控制方式改为高字节',
-      icon: 'success',
-      duration: 1000
-    });
     this.hideControlTypeDialog();
   },
 
   lowByte: function () {
     this.setData({
-      controlTypeToDisplay: 2
+      controlTypeToDisplay: 2,
+      titleToDisplay: '改为低字节'
     });
     // console.log(this.data.openControl);
     this.requestControlType();
-    wx.showToast({
-      title: '控制方式改为低字节',
-      icon: 'success',
-      duration: 1000
-    })
     this.hideControlTypeDialog();
   },
 
@@ -461,6 +512,11 @@ Page({
         if (that.data.result == 1)
         {
           console.log("操作成功");
+          wx.showToast({
+            title: '操作成功',
+            icon: 'success',
+            duration: 1000
+          });
           that.setData({
             accuracy: that.data.accuracyToDisplay,
             accuracyToDisplay: ''
@@ -473,14 +529,24 @@ Page({
           that.showGetAccessControlDialog();
         }
         if (that.data.result == 0)
+        {
           console.log("操作失败")
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 1000
+          });
+        }
       }
     })
   },
 
   confirmModifyAccuracy: function () {
-    if (!this.data.accuracyToDisplay)
+    if (!this.data.accuracyToDisplay || this.data.accuracyToDisplay < 5 || this.data.accuracyToDisplay > 100)
+    {
+      this.clearAccuracy();
       return;
+    }
     this.requestModifyAccuracy();
     this.hideModifyAccuracyDialog();
   },
@@ -528,9 +594,23 @@ Page({
         })
 
         if (that.data.result == 1)
+        {
           console.log("操作成功")
+          wx.showToast({
+            title: '获取权限成功',
+            icon: 'success',
+            duration: 1000
+          });
+        }
         if (that.data.result == 0)
+        {
           console.log("操作失败")
+          wx.showToast({
+            title: '获取权限失败',
+            icon: 'none',
+            duration: 1000
+          });
+        }
       }
     })
   },

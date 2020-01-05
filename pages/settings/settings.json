@@ -1,4 +1,5 @@
 {
   "navigationBarTitleText": "设置",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": false
 }

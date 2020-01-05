@@ -46,7 +46,7 @@
     <view class="modal-title">控制精度</view>
     <view class="modal-content">
         <input type="number" class="modal-input" 
-        placeholder="请输入" value="{{accuracyToDisplay}}"
+        placeholder="请输入 5 - 100" value="{{accuracyToDisplay}}"
         bindinput="inputAccuracy" 
         bindconfirm="confirmModifyAccuracy" />
         <icon type="cancel" size='20' bindtap="clearAccuracy"></icon>

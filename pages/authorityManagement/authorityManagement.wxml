@@ -4,14 +4,17 @@
 <view class="container">
 
     <view class="item" wx:for="{{accessCtrlUsers}}" wx:for-index="index" wx:key="index" id="{{index}}">
-        <view class="item-user">{{util.sub(item.u_openid)}}</view>
+        <view class="item-user">{{item.u_phone}}</view>
         <view class="item-authority">访问</view>
         <view wx:if="{{item.a_access == 1 || item.p_access == 1}}" class="item-authority">控制</view>
+        <view wx:else class="item-authority">    </view>
         <view class="item-method">
-            <view wx:if="{{item.a_access == 1 && item.p_access == 0}}" class="item-method-top">来自授权</view>
-            <view wx:if="{{item.a_access == 0 && item.p_access == 1}}" class="item-method-top">来自密码</view>
-            <view wx:if="{{item.a_access == 1 && item.p_access == 1}}" class="item-method-top">管理员</view>
-            <view wx:if="{{item.a_access == 1 && item.p_access == 0}}" class="item-method-second">授权者: {{util.sub(item.a_openid)}}</view>
+            <view wx:if="{{item.a_access == 2}}" class="item-method-top">管理员</view>
+            <block wx:else>
+                <view wx:if="{{item.source == 2}}" class="item-method-top">来自授权</view>
+                <view wx:if="{{item.p_access == 1 && item.source != 2}}" class="item-method-top">来自密码</view>
+            </block>
+            <view wx:if="{{item.source == 2}}" class="item-method-second">授权者: {{item.a_phone}}</view>
         </view>
         <image style="margin-left: 20rpx; width: 40rpx; height: 40rpx;" src="../../icon/icon-delete.png"
             id="{{index}}" bindtap="showDeleteAccessControlUserDialog">

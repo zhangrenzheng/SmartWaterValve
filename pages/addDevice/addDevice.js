@@ -92,13 +92,24 @@ Page({
         if (that.data.result == 1)
         {
           console.log("添加设备：操作成功")
+          wx.showToast({
+            title: '添加设备成功',
+            icon: 'success',
+            duration: 2000
+          })
           that.setData({
             source: ''
           })
           wx.navigateBack()
         }
         if (that.data.result == 0)
-          console.log("添加设备：操作失败")
+        {
+          wx.showToast({
+            title: '添加设备失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       }
     })
   },

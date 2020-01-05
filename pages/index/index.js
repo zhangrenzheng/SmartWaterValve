@@ -89,7 +89,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    if (!this.data.openID)
+      return
+    this.requestDeviceList();
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -165,10 +168,22 @@ Page({
         if (res.data.result == 1)
         {
           console.log("注册用户成功")
+          wx.showToast({
+            title: '用户注册成功',
+            icon: 'success',
+            duration: 2000
+          });
           that.requestDeviceList()
         }
         if (res.data.result == 0)
+        {
           console.log("注册用户失败")
+          wx.showToast({
+            title: '用户注册失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
       }
     });
   },

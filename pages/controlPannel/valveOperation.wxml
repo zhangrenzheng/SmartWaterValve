@@ -78,7 +78,7 @@
     <view class="modal-title">阀门模拟量控制</view>
     <view class="modal-content">
         <input type="number" class="modal-input" 
-        placeholder="请输入" value="{{positionToDisplay}}"
+        placeholder="请输入 0 - 100" value="{{positionToDisplay}}"
         bindinput="inputPosition" 
         bindconfirm="confirmModifyPosition" />
         <icon type="cancel" size='20' bindtap="clearPosition"></icon>

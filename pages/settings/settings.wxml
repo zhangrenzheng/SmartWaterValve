@@ -137,7 +137,7 @@
 <view class="modal-dialog" wx:if="{{deviceGroupingDialogVisible}}">
     <view class="modal-title">设备分组</view>
     <view class="modal-content" style="margin-bottom: 10rpx;">
-        <input type="text" class="modal-input" 
+        <input type="number" class="modal-input" 
           placeholder="请输入分组号：1 - 10" value="{{teamToDisplay}}"
           bindinput="inputTeam" 
           bindconfirm="confirmDeviceGrouping" />
